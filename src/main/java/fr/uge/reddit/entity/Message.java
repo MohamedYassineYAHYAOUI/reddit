@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name= "MESSAGE")
-public class MessageEntity {
+public class Message {
 
     @Id
     @GeneratedValue(generator = "message_gen")
@@ -16,7 +16,7 @@ public class MessageEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USERID")
-    private UserEntity author;
+    private User author;
 
     @Column(name="BODY")
     private String body;
@@ -30,17 +30,17 @@ public class MessageEntity {
     //TODO :we can inmplement Message parent with field Message parent @Manyto One (cf voir contexte reddit)
     @OneToMany(cascade = CascadeType.ALL) // a vérifier si all ou DELEt
     @JoinColumn(name="MESSAGEID")
-    private List<MessageEntity> replies;
+    private List<Message> replies;
 
 
-    public MessageEntity(){};
+    public Message(){};
 
 
     public Long getId() {
         return id;
     }
 
-    public UserEntity getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
@@ -56,7 +56,7 @@ public class MessageEntity {
         return timeStamp;
     }
 
-    public List<MessageEntity> getReplies() {
+    public List<Message> getReplies() {
         return replies;
     }
 
@@ -64,7 +64,7 @@ public class MessageEntity {
         this.id = id;
     }
 
-    public void setAuthor(UserEntity author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 
@@ -80,7 +80,7 @@ public class MessageEntity {
         this.timeStamp = timeStamp;
     }
 
-    public void setReplies(List<MessageEntity> replies) {
+    public void setReplies(List<Message> replies) {
         this.replies = replies;
     }
 }

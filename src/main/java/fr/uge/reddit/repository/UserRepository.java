@@ -1,10 +1,10 @@
 package fr.uge.reddit.repository;
 
-import fr.uge.reddit.entity.UserEntity;
+import fr.uge.reddit.entity.User;
 import org.springframework.data.repository.CrudRepository;
 
-public interface UserRepository extends CrudRepository<UserEntity, Long> {
+public interface UserRepository extends CrudRepository<User, Long> {
 
-    UserEntity findByLogin(String login);
+    User findByLogin(String login);
 
 }

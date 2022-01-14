@@ -5,7 +5,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name="User")
-public class UserEntity {
+public class User {
 
     @Id
     @GeneratedValue(generator = "user_gen")
@@ -21,9 +21,9 @@ public class UserEntity {
     @Column(name="ISADMIN")
     private boolean isAdmin;
 
-    public UserEntity(){}
+    public User(){}
 
-    public UserEntity(String login, String password, Boolean isAdmin){
+    public User(String login, String password, Boolean isAdmin){
         this.login = Objects.requireNonNull(login);
         this.password = Objects.requireNonNull(password);
         this.isAdmin = isAdmin;
