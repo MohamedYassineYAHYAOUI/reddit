@@ -27,6 +27,7 @@ public class PostController {
         if(bindingResult.hasErrors()) {
             return "new-post";
         }
+        //ajout dans la bdd
         return "index";
     }
 }
