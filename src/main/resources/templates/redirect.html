@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reddit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Warning</h1>
+    <p>The link you clicked leads to the following website:</p>
+    <a th:href="${to}" th:text="${to}"></a>
+    <p>Click the link to proceed to the website.</p>
+</body>
+</html>
