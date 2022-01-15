@@ -1,6 +1,11 @@
 package fr.uge.reddit.controller;
 
 import fr.uge.reddit.dto.PostDTO;
+import fr.uge.reddit.entity.Message;
+import fr.uge.reddit.entity.Post;
+import fr.uge.reddit.repository.PostRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +17,9 @@ import javax.validation.Valid;
 
 @Controller
 public class PostController {
+    @Autowired
+    PostRepository postRepository;
+
     @ModelAttribute("post")
     public PostDTO credentials() {
         return new PostDTO();
@@ -27,7 +35,13 @@ public class PostController {
         if(bindingResult.hasErrors()) {
             return "new-post";
         }
-        //ajout dans la bdd
+        Post newPost = new Post();
+        Message message = new Message();
+        message.setBody(post.getBody());
+        newPost.setTitle(post.getTitle());
+        newPost.setMessage(message);
+        postRepository.save(newPost);
+        model.addAttribute("postRepository", postRepository);
         return "index";
     }
 }
