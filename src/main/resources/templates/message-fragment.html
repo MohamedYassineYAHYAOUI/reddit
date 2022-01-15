@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reddit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <!-- TODO: remove inline style -->
+    <!-- TODO: message.author.name -->
+    <div th:fragment="message (message)" style="border: 1px solid black">
+        <details open>
+            <summary>
+                <a th:href="@{/u/} + ${message.author}" th:text="${message.author}"/>
+                Score: <span th:text="${message.score}"/>
+            </summary>
+
+            <p th:text="${message.body}"/>
+            <ul style="list-style: none">
+                <li th:each="reply : ${message.replies}">
+                    <div th:replace="message-fragment :: message(message = ${reply})"/>
+                </li>
+            </ul>
+        </details>
+
+    </div>
+</body>
+</html>

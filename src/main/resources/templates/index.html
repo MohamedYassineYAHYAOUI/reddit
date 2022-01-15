@@ -12,5 +12,7 @@
         <li><a th:href="@{/redirect?to=https://www.reddit.com}">The true Reddit</a></li>
     </ul>
 
+    <div th:replace="message-fragment :: message(message = ${message})"/>
+
 </body>
 </html>
