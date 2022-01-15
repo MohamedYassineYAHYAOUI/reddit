@@ -13,7 +13,7 @@ import javax.validation.Valid;
 @Controller
 public class PostController {
     @ModelAttribute("post")
-    public PostDTO credentials() {
+    public PostDTO post() {
         return new PostDTO();
     }
 

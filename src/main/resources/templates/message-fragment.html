@@ -7,7 +7,7 @@
 <body>
     <!-- TODO: remove inline style -->
     <!-- TODO: message.author.name -->
-    <div th:fragment="message (message)" style="border: 1px solid black">
+    <div th:fragment="message (message)">
         <details open>
             <summary>
                 <a th:href="@{/u/} + ${message.author}" th:text="${message.author}"/>

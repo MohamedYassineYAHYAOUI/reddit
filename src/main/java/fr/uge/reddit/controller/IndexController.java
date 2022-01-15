@@ -4,11 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
 @Controller
 public class IndexController {
+    // TODO: Replace by actual Message class / DTO
     public static class Message {
         private String author;
         private String body;
@@ -58,6 +60,26 @@ public class IndexController {
         }
     }
 
+    // TODO: Replace by actual User class / DTO
+    public static class User {
+        private String login;
+
+        public User() {
+        }
+
+        public User(String login) {
+            this.login = login;
+        }
+
+        public String getLogin() {
+            return login;
+        }
+
+        public void setLogin(String login) {
+            this.login = login;
+        }
+    }
+
     @ModelAttribute("message")
     public Message message() {
         return new Message("toto", "hello world", 4,
@@ -72,5 +94,14 @@ public class IndexController {
     public String getIndex(Model model) {
         model.addAttribute("message", message());
         return "index";
+    }
+
+    @GetMapping("/u/{login}")
+    public String getUserPage(@PathVariable String login, Model model) {
+        // TODO: Actually fetch from the database
+        // TODO: Sort, filter, page, etc.
+        model.addAttribute("messages", List.of(message(), message(), message()));
+        model.addAttribute("user", new User(login));
+        return "user";
     }
 }
