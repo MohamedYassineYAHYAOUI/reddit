@@ -13,12 +13,4 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends CrudRepository<Post, Long> {
-
-    final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("main-persistence-unit");
-
-    public default List<Post> getAll(){
-        EntityManager em = entityManagerFactory.createEntityManager();
-        TypedQuery<Post> query = em.createQuery("SELECT p from POSTS p", Post.class);
-        return query.getResultList();
-    }
 }
