@@ -18,16 +18,13 @@ public class PostController {
     }
 
     @GetMapping("/post")
-    public String getPost(Model model) {
-        return "new-post";
-    }
+    public String getPost(Model model) {return "new-post";}
 
     @PostMapping("/post")
     public String postPost(@Valid @ModelAttribute("post") PostDTO post, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             return "new-post";
         }
-        //ajout dans la bdd
-        return "index";
+        return "home_page";
     }
 }

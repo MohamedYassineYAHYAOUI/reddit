@@ -3,9 +3,9 @@ package fr.uge.reddit.dto;
 import javax.validation.constraints.NotBlank;
 
 public class CredentialsDTO {
-    @NotBlank
+    @NotBlank(message = "login must not be blank")
     private String login;
-    @NotBlank
+    @NotBlank(message = "password must not be blank")
     private String password;
 
     public String getLogin() {

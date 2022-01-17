@@ -5,7 +5,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="Posts")
-public class Post {
+public class PostEntity {
 
     @Id
     @GeneratedValue(generator = "post_gen")
@@ -15,20 +15,20 @@ public class Post {
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "MESSAGEID")
-    private Message message;
+    private MessageEntity message;
 
 
     @Column(name="TITLE")
     private String title;
 
-    public Post(){}
+    public PostEntity(){}
 
 
     public Long getId() {
         return id;
     }
 
-    public Message getMessage() {
+    public MessageEntity getMessage() {
         return message;
     }
 
@@ -40,7 +40,7 @@ public class Post {
         this.id = id;
     }
 
-    public void setMessage(Message message) {
+    public void setMessage(MessageEntity message) {
         this.message = message;
     }
 

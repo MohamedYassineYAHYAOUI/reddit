@@ -4,13 +4,14 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import  org.springframework.security.crypto.password.*;
 
 import javax.sql.DataSource;
 
 @Configuration
-//@ComponentScan
+@EnableRetry
 public class AppConfig {
 
     @Bean
