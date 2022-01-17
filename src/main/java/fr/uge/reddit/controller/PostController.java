@@ -4,6 +4,7 @@ import fr.uge.reddit.dto.PostDTO;
 import fr.uge.reddit.entity.Message;
 import fr.uge.reddit.entity.Post;
 import fr.uge.reddit.repository.PostRepository;
+import fr.uge.reddit.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 @Controller
 public class PostController {
     @Autowired
-    PostRepository postRepository;
+    PostService postService;
 
     @ModelAttribute("post")
     public PostDTO credentials() {
@@ -40,8 +41,8 @@ public class PostController {
         message.setBody(post.getBody());
         newPost.setTitle(post.getTitle());
         newPost.setMessage(message);
-        postRepository.save(newPost);
-        model.addAttribute("postRepository", postRepository);
+        postService.createNewPost(newPost);
+        model.addAttribute("postService", postService);
         return "index";
     }
 }
