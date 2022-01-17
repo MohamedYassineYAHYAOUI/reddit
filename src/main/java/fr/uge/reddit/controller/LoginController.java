@@ -20,20 +20,22 @@ public class LoginController{
         return new CredentialsDTO();
     }
 
-    @GetMapping("/login")
+    @GetMapping("login")
     public String getLogin(Model model) {
         return "login";
     }
 
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public String checkLoginInfo(@Valid @ModelAttribute("credentials") CredentialsDTO  credential,
                                 BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
+        System.out.println("test");
+        if(bindingResult.hasErrors()) {
+            //gestion error
             return "login";
         }
-        System.out.println("checkRectInfo");
-        //user.save
+
+        //gestion login
         return "login";
     }
 
