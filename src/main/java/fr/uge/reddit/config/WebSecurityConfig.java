@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -23,10 +22,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomUserDetailsService customUserDetailsService;
 
 
-
+    //NB : il faut évoluer ces critère en fonction des nouvelles ressources
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                //TODO
                 //.csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/", "/index", "/css/*", "/js/*").permitAll()
@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin();
                 //.loginPage("/login");
-        //TODO : delete token on server restart
+                //TODO : delete token on server restart
 
     }
 
