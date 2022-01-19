@@ -1,6 +1,7 @@
 package fr.uge.reddit.controller;
 
 import fr.uge.reddit.dto.PostDTO;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,13 +19,15 @@ public class PostController {
     }
 
     @GetMapping("/post")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public String getPost(Model model) {return "new-post";}
 
     @PostMapping("/post")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public String postPost(@Valid @ModelAttribute("post") PostDTO post, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             return "new-post";
         }
-        return "home_page";
+        return "index";
     }
 }

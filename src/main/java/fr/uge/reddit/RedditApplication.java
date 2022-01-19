@@ -14,7 +14,7 @@ public class RedditApplication {
     @Bean
     public CommandLineRunner initAdmin(UserService userService){
         return args -> {
-            userService.createNewUserAccount(new UserEntity("admin","admin", true));
+            userService.createNewUserAccount(new UserEntity("admin","admin", true)); // TODO: mettre dans les logins dans properties
         };
     }
 

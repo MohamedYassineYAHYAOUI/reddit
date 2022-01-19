@@ -26,18 +26,4 @@ public class LoginController{
     }
 
 
-    @PostMapping("login")
-    public String checkLoginInfo(@Valid @ModelAttribute("credentials") CredentialsDTO  credential,
-                                BindingResult bindingResult, Model model) {
-        System.out.println("test");
-        if(bindingResult.hasErrors()) {
-            //gestion error
-            return "login";
-        }
-
-        //gestion login
-        return "login";
-    }
-
-
 }
