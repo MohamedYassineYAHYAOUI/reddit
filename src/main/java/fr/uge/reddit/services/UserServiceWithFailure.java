@@ -21,6 +21,9 @@ public class UserServiceWithFailure{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    //@Autowired
+    //CustomUserDetailsService
+
 
     @Transactional
     public void createUserWithFailure(UserEntity user) throws IllegalArgumentException{

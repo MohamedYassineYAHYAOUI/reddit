@@ -13,17 +13,18 @@ import javax.validation.Valid;
 @Controller
 public class LoginController{
 
-
-
     @ModelAttribute("credentials")
     public CredentialsDTO credentials() {
         return new CredentialsDTO();
     }
 
-    @GetMapping("login")
+
+    @GetMapping("/login")
     public String getLogin(Model model) {
         return "login";
     }
+
+
 
 
 }

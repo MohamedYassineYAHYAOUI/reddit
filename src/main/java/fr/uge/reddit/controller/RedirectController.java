@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class RedirectController {
 
     @GetMapping("/redirect")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public String getRedirect(@RequestParam("to") String to, Model model) {
         model.addAttribute("to", to);
         return "redirect";
