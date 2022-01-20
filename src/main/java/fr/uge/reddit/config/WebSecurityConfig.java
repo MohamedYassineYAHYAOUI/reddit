@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                //.loginPage("/login").permitAll() // TODO : implementer un custom login page
                 .defaultSuccessUrl("/", false)
                 .and()
                 .logout()
@@ -42,11 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
                     .logoutSuccessUrl("/");
-
-                //.loginPage("/login").permitAll()
-
-                //.and()
-                //.logout();
                 //TODO : delete token on server restart
     }
 
