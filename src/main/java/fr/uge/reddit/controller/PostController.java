@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -29,6 +30,16 @@ public class PostController {
     @GetMapping("/post")
     public String getPost(Model model) {
         return "new-post";
+    }
+
+    @GetMapping("/post/{id}")
+    public String getPostId(@PathVariable("id") long id, Model model){
+        var post = postService.getPost(id).get();
+        if(post != null){
+            model.addAttribute("post", post);
+            return "post";
+        }
+        return "index";
     }
 
     @PostMapping("/post")
