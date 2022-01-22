@@ -16,4 +16,8 @@ public class PostServiceWithFailure {
     public void createNewPostWrong(Post post){
         postRepository.save(post);
     }
+
+    public PostRepository getPostRepository() {
+        return postRepository;
+    }
 }

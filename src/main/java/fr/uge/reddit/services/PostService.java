@@ -10,6 +10,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class PostService {
@@ -33,5 +36,12 @@ public class PostService {
                 retry=true;
             }
         }
+    }
+
+    public List<Post> getAllPosts(){
+        var posts = StreamSupport
+                .stream(postServiceWithFailure.getPostRepository().findAll().spliterator(), false)
+                .collect(Collectors.toList());
+        return posts;
     }
 }
