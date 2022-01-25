@@ -12,11 +12,9 @@ public class PostEntity {
     @Column(name="POSTID")
     private Long id;
 
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "MESSAGEID")
     private MessageEntity message;
-
 
     @Column(name="TITLE")
     private String title;

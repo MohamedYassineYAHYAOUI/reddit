@@ -13,7 +13,6 @@ public class MessageEntity {
     @Column(name="MESSAGEID")
     private Long id;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="USERID")
     private UserEntity author;

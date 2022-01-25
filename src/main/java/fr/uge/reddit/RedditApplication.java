@@ -2,6 +2,7 @@ package fr.uge.reddit;
 
 
 import fr.uge.reddit.entity.UserEntity;
+import fr.uge.reddit.entity.UserRoles;
 import fr.uge.reddit.services.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -14,7 +15,7 @@ public class RedditApplication {
     @Bean
     public CommandLineRunner initAdmin(UserService userService){
         return args -> {
-            userService.createNewUserAccount(new UserEntity("admin","admin", true)); // TODO: mettre dans les logins dans properties
+            userService.createNewUserAccount(new UserEntity("admin","admin", UserRoles.ADMIN)); // TODO: mettre dans les logins dans properties
         };
     }
 

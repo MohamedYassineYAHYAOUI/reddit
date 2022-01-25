@@ -1,8 +1,13 @@
 package fr.uge.reddit.dto;
 
-import javax.validation.constraints.NotBlank;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
-public class CredentialsDTO {
+import javax.validation.constraints.NotBlank;
+import java.util.Objects;
+
+@Component
+public class CredentialsDTO  {
     @NotBlank(message = "login must not be blank")
     private String login;
     @NotBlank(message = "password must not be blank")
@@ -22,5 +27,17 @@ public class CredentialsDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof CredentialsDTO)) return false;
+        CredentialsDTO credentials = (CredentialsDTO) o;
+        return Objects.equals(login, credentials.login) && Objects.equals(password, credentials.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return (login + password).hashCode();
     }
 }

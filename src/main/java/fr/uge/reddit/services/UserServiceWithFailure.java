@@ -3,10 +3,6 @@ package fr.uge.reddit.services;
 import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +27,7 @@ public class UserServiceWithFailure{
         if(userSameLogin != null){
             throw new IllegalArgumentException("Login is not available");
         }
-        userRepository.save(new UserEntity(user.getLogin(),passwordEncoder.encode(user.getPassword()), user.isAdmin()));
+        userRepository.save(new UserEntity(user.getLogin(),passwordEncoder.encode(user.getPassword()), user.getUserRole()));
     }
 
 

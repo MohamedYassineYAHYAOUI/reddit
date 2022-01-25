@@ -1,11 +1,17 @@
 package fr.uge.reddit.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Objects;
 
 @Entity
 @Table(name="User")
-public class UserEntity {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(generator = "user_gen")
@@ -18,15 +24,16 @@ public class UserEntity {
     @Column(name="PASSWORD")
     private String password;
 
-    @Column(name="ISADMIN")
-    private boolean isAdmin;
+    @Column(name="USER_ROLE")
+    @Enumerated(EnumType.STRING)
+    private UserRoles userRole;
 
     public UserEntity(){}
 
-    public UserEntity(String login, String password, Boolean isAdmin){
+    public UserEntity(String login, String password, UserRoles userRole){
         this.login = Objects.requireNonNull(login);
         this.password = Objects.requireNonNull(password);
-        this.isAdmin = isAdmin;
+        this.userRole = Objects.requireNonNull(userRole);
     }
 
 
@@ -37,13 +44,47 @@ public class UserEntity {
     public String getLogin() {
         return login;
     }
+    public UserRoles getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRoles userRole) {
+        this.userRole = userRole;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority auth = new SimpleGrantedAuthority(userRole.getRole());
+        return Collections.singletonList(auth);
+    }
 
     public String getPassword() {
         return password;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
     }
 
     public void setId(Long id) {
@@ -58,7 +99,5 @@ public class UserEntity {
         this.password = password;
     }
 
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
+
 }
