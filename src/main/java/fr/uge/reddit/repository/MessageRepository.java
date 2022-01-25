@@ -1,26 +1,25 @@
 package fr.uge.reddit.repository;
 
-import fr.uge.reddit.entity.Message;
-import fr.uge.reddit.entity.User;
+import fr.uge.reddit.entity.MessageEntity;
+import fr.uge.reddit.entity.UserEntity;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface MessageRepository extends CrudRepository<Message, Long>{
+public interface MessageRepository extends CrudRepository<MessageEntity, Long>{
 
 
-    Message findByAuthor(User author);
+    MessageEntity findByAuthor(UserEntity author);
 
-    @Query("SELECT e FROM Message e order by e.score ASC")
-    List<Message> listOfTopScores(Pageable pageable);
+    @Query("SELECT e FROM MessageEntity e order by e.score ASC")
+    List<MessageEntity> listOfTopScores(Pageable pageable);
 
-    @Query("SELECT e FROM Message e order by e.score DESC")
-    List<Message> listOfWorstScores(Pageable pageable);
+    @Query("SELECT e FROM MessageEntity e order by e.score DESC")
+    List<MessageEntity> listOfWorstScores(Pageable pageable);
 
 
 }

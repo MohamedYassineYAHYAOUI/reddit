@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <title>Create an account</title>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+
+    <link th:rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" type="text/css" th:href="@{/assets/jquery-steps/jquery.steps.css} "/>
+
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+            <h2 class="mt-5">Create account</h2>
+
+            <div th:if="${!registered_successfully}">
+
+                <form id="example-advanced-form" th:action="@{/register}" method="post" th:object="${credentials}">
+                    <h3>Account</h3>
+
+                    <legend>Account Information</legend>
+
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="userName-2">Login *</label>
+                                <input id="userName-2" name="login" th:field="*{login}" type="text"
+                                       class="form-control required">
+                                <span  th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Invalid login</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password-2">Password *</label>
+                                <input id="password-2" name="password" th:field="*{password}" type="text"
+                                       class="form-control required">
+
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirm-2">Confirm Password *</label>
+                                <input id="confirm-2" name="confirm" type="text" class="form-control required">
+                            </div>
+                        </div>
+                    </div>
+                    <p>(*) Mandatory</p>
+                    <div>
+                        <button type="submit">Register</button>
+                    </div>
+                </form>
+
+            </div>
+
+            <div th:if="${registered_successfully}">
+                <p>welcome</p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{assets/jquery-steps/jquery.steps.min.js}"></script>
+<script th:src="@{assets/jquery-validate/jquery.validate.min.js}"></script>
+
+
+</body>
+</html>
