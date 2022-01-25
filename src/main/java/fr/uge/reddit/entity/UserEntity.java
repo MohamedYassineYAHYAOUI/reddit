@@ -44,6 +44,9 @@ public class UserEntity implements UserDetails {
     public String getLogin() {
         return login;
     }
+
+
+
     public UserRoles getUserRole() {
         return userRole;
     }
@@ -86,6 +89,8 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
+
+
 
     public void setId(Long id) {
         this.id = id;

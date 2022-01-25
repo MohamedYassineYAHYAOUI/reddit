@@ -25,7 +25,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
-        System.out.println("login "+login);
         UserEntity userWithSameLogin = userRepository.findByLogin(login);
         if(userWithSameLogin == null){
             throw new UsernameNotFoundException("invalid Login or Password");

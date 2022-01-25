@@ -5,6 +5,9 @@ import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.entity.UserRoles;
 import fr.uge.reddit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,17 +24,10 @@ public class UserLoginCreateController {
     @GetMapping("/login")
     public String getLogin(Model model) {
         model.addAttribute("credentials", new CredentialsDTO());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("already_logged_in", !(authentication instanceof AnonymousAuthenticationToken));
         return "login";
     }
-
-
-    @PostMapping("/login")
-    public String loginUser(@Valid @ModelAttribute("credentials") CredentialsDTO credentials,
-                             BindingResult bindingResult, Model model){
-        System.out.println("username "+credentials.getLogin());
-        return "login";
-    }
-
 
     @GetMapping("/register")
     public String createUserPage(Model model){

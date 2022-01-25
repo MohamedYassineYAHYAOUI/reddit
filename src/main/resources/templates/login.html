@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,7 +8,22 @@
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+
+    <div sec:authorize="isAuthenticated()">
+        <p>
+        Hello there <b><span th:text="${#authentication.name}"/></b>!<br>
+        Seems you are already connected, you will be redirected to the main page in a few seconds.
+           <script th:inline="javascript">
+            /*<![CDATA[*/
+                var timer = setTimeout(function() {
+                window.location=[[${@environment.getProperty('url.app.index')}]]
+            }, 5000);
+            /*]]>*/
+            </script>
+        </p>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()" class="container">
         <h2 class="d-flex justify-content-center form-signin-heading">Welcome to Reddit, please login</h2>
         <div class="d-flex justify-content-center">
             <div th:if="${param.error}" class="alert alert-danger">
