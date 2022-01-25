@@ -25,6 +25,13 @@ public class UserLoginCreateController {
     }
 
 
+    @PostMapping("/login")
+    public String loginUser(@Valid @ModelAttribute("credentials") CredentialsDTO credentials,
+                             BindingResult bindingResult, Model model){
+        System.out.println("username "+credentials.getLogin());
+        return "login";
+    }
+
 
     @GetMapping("/register")
     public String createUserPage(Model model){
