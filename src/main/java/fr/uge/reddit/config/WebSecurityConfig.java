@@ -28,13 +28,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/index",  "/redirect","/css/*", "/js/*").permitAll()
+                .antMatchers("/", "/index", "/register","/redirect","/css/*", "/webjars/*", "/assets/*", "/js/*").permitAll()
                 .antMatchers("/subject/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 //.loginPage("/login").permitAll() // TODO : implementer un custom login page
-                .defaultSuccessUrl("/", false)
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/", true)
                 .and()
                 .logout()
                     .logoutUrl("/logout")
