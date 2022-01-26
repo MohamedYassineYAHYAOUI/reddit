@@ -17,7 +17,7 @@
         <div>
             <ul>
                 <li th:each="line : ${postService.getAllPosts()}">
-                    <a th:href="@{/post/{id}(id=${line.getId()})}" th:text="${line.getTitle()}"></a>
+                    <a th:href="@{/subject/post/{id}(id=${line.getId()})}" th:text="${line.getTitle()}"></a>
                 </li>
             </ul>
         </div>
