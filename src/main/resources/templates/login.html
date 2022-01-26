@@ -12,12 +12,12 @@
     <div sec:authorize="isAuthenticated()">
         <p>
         Hello there <b><span th:text="${#authentication.name}"/></b>!<br>
-        Seems you are already connected, you will be redirected to the main page in a few seconds.
+        Seems you are already loged in, you will be redirected to the main page in a few seconds.
            <script th:inline="javascript">
             /*<![CDATA[*/
                 var timer = setTimeout(function() {
                 window.location=[[${@environment.getProperty('url.app.index')}]]
-            }, 5000);
+            }, 7000);
             /*]]>*/
             </script>
         </p>
