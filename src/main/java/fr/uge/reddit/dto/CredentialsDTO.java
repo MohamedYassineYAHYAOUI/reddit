@@ -9,9 +9,9 @@ import java.util.Objects;
 
 public class CredentialsDTO  {
 
-    @NotBlank(message = "login must not be blank")
+    @NotBlank(message = "Login must not be blank")
     private String login;
-    @NotBlank(message = "password must not be blank")
+    @NotBlank(message = "Password must not be blank")
     private String password;
 
     public String getLogin() {

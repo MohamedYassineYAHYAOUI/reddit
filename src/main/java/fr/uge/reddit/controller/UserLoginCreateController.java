@@ -46,11 +46,10 @@ public class UserLoginCreateController {
             // model.addAttribute(); error login exist
             return "register_user_form";
         }
-
         try{
             userService.createNewUserAccount(new UserEntity(credentials.getLogin(), credentials.getPassword(), UserRoles.USER));
         }catch(IllegalArgumentException e){
-            //model.addAttribute("err_msg", e.getMessage());
+            model.addAttribute("err_msg", e.getMessage());
             return "register_user_form";
         }
         //TODO : des notifications de type "compte crée"
