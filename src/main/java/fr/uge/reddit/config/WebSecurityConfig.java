@@ -27,23 +27,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
                 .authorizeRequests()
                 .antMatchers("/", "/index", "/register","/redirect","/css/*", "/webjars/**", "/assets/**", "/js/*").permitAll()
                 .antMatchers("/subject/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                //.loginPage("/login").permitAll() // TODO : implementer un custom login page
+                .loginPage("/login").permitAll() // TODO : implementer un custom login page
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/index", false)
+                .defaultSuccessUrl("/", false)
                 .and()
                 .logout()
-                    .logoutUrl("/logout")
+                    .logoutUrl("/logout").permitAll()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
                     .deleteCookies("JSESSIONID")
-                    .logoutSuccessUrl("/");
+                    .logoutSuccessUrl("/login?logout");
                 //TODO : delete token on server restart
     }
 
@@ -56,5 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
     }
+
    }
 

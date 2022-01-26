@@ -6,11 +6,12 @@ import org.springframework.stereotype.Component;
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
-@Component
+
 public class CredentialsDTO  {
-    @NotBlank(message = "login must not be blank")
+
+    @NotBlank(message = "Login must not be blank")
     private String login;
-    @NotBlank(message = "password must not be blank")
+    @NotBlank(message = "Password must not be blank")
     private String password;
 
     public String getLogin() {
