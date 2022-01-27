@@ -1,18 +1,29 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Reddit</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
 </head>
 <body>
     <h1>Reddit</h1>
     <ul>
-        <li><a th:href="@{/login}">Log in</a></li>
-        <li><a th:href="@{/post}">Create a new post</a></li>
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Log in</a></li>
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">register</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log out</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/subject/createNewSubject}">Create a new post</a></li>
         <li><a th:href="@{/redirect?to=https://www.reddit.com}">The true Reddit</a></li>
     </ul>
-
-    <div th:replace="message-fragment :: message(message = ${message})"/>
-
+    <h2>Posts</h2>
+    <div th:if="${postService != null}">
+        <div>
+            <ul>
+                <li th:each="line : ${postService.getAllPosts()}">
+                    <a th:href="@{/subject/post/{id}(id=${line.getId()})}" th:text="${line.getTitle()}"></a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </body>
 </html>

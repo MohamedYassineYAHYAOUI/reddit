@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Create an account</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+            <h2 class="mt-5 d-flex justify-content-center form-signin-heading">Create an account</h2>
+
+            <div sec:authorize="!isAuthenticated()">
+
+                <form th:action="@{/register}" method="post" th:object="${credentials}">
+
+                        <div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="userLogin">Login *</label>
+                                    <div class="input-group">
+
+                                        <input type="text" class="form-control"
+                                               th:field="*{login}" id="userLogin" placeholder="User name" required
+                                               th:classappend="${err_msg != null || #fields.hasErrors('login')}? 'is-invalid'">
+                                        <div class="invalid-feedback">
+                                            <span th:if="${#fields.hasErrors('login')}" th:errors="*{login}"/>
+                                            <span th:if="${err_msg != null}" th:text="${err_msg}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="col-md-6">
+                                    <label for="password">Password *</label>
+                                    <input id="password" name="password" th:field="*{password}" type="password"
+                                           class="form-control" placeholder="Password"
+                                           th:classappend="${#fields.hasErrors('password')}? 'is-invalid'" required>
+                                    <div class="invalid-feedback">
+                                        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label for="confirm">Confirm Password *</label>
+                                    <input id="confirm" name="confirm" type="password" class="form-control"
+                                           placeholder="Confirm password" required>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    <p>(*) Mandatory</p>
+                    <div>
+                        <button class="btn btn-lg btn-primary btn-block" onclick="checkPasswordMatch(event)" type="submit">Register</button>
+                    </div>
+                </form>
+                <script>
+                    function checkPasswordMatch(e){
+                        var pwd = document.getElementById("password").value;
+                        var pwd2 = document.getElementById("confirm").value;
+                        if (pwd !== pwd2) {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              document.getElementById("confirm").classList.add("is-invalid");
+                        }
+                    }
+                </script>
+            </div>
+
+            <div sec:authorize="isAuthenticated()">
+                <p>
+                    Hello there <b><span th:text="${#authentication.name}"/></b>!<br>
+                    Seems you are already loged in, you will be redirected to the main page in a few seconds.
+                    <script th:inline="javascript">
+            /*<![CDATA[*/
+                var timer = setTimeout(function() {
+                window.location=[[${@environment.getProperty('url.app.index')}]]
+            }, 7000);
+            /*]]>*/
+            </script>
+                </p>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
