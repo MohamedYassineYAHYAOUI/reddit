@@ -13,7 +13,7 @@ public class TopicServiceWithFailure {
     TopicRepository topicRepository;
 
     @Transactional
-    public void createNewTopicWrong(TopicEntity topic){
+    public void createNewTopic(TopicEntity topic){
         topicRepository.save(topic);
     }
 

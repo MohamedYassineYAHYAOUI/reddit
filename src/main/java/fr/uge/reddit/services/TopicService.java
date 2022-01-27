@@ -26,7 +26,7 @@ public class TopicService {
         while(retry) {
             retry=false;
             try {
-                topicServiceWithFailure.createNewTopicWrong(topic); //!!!!!!!!!!
+                topicServiceWithFailure.createNewTopic(topic);
             } catch (org.springframework.orm.ObjectOptimisticLockingFailureException e){
                 retry=true;
             }
@@ -44,4 +44,6 @@ public class TopicService {
         var topic = topicServiceWithFailure.getTopicRepository().findById(id);
         return topic;
     }
+
+
 }

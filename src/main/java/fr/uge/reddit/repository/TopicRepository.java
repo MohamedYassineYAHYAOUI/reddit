@@ -12,4 +12,7 @@ public interface TopicRepository extends CrudRepository<TopicEntity, Long> {
 
     @Query("SELECT p FROM TopicEntity p JOIN FETCH p.message m JOIN FETCH m.replies WHERE p.id = :postId")
     public TopicEntity findByIdWithReplies(@Param("postId") Long postId);
+
+
+    //public List<>
 }

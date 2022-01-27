@@ -4,6 +4,7 @@ import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.services.AdminService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,14 +43,14 @@ public class TopicController {
             model.addAttribute("topic", topic);
             return "topic";
         }
-        return "index";
+        return "redirect:/all";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteTopic(@PathVariable("id") long topicId, Model model){
         /*adminService.deletePost(subjectId);*/
 
-        return "redirect:/";
+        return "redirect:/all";
     }
 
     @PostMapping("/create")
@@ -64,7 +65,16 @@ public class TopicController {
         newTopic.setMessage(message);
         topicService.createNewTopic(newTopic);
         model.addAttribute("topicService", topicService);
-        return "redirect:/";
+        return "redirect:/all";
     }
+
+    /*
+    @GetMapping("/topics")
+    public String topics(@RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
+                         @RequestParam(value = "size", required = false, defaultValue = "5")int size,
+                         Model model){
+        var topics = topicService.findPaginated(PageRequest.of(pageNumber-1 , size));
+
+    }*/
 
 }
