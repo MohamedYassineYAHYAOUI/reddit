@@ -18,12 +18,6 @@ public class UserService {
     @Autowired
     private UserServiceWithFailure userServiceWithFailure;
 
-    @PersistenceUnit
-    EntityManagerFactory emf;
-
-    @PersistenceContext
-    EntityManager em;
-
     @Transactional
     public void createNewUserAccount(UserEntity user) throws IllegalArgumentException{
         var retry = true;
@@ -36,5 +30,8 @@ public class UserService {
             }
         }
     }
+
+
+
 
 }

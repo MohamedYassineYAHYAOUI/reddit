@@ -2,7 +2,7 @@ package fr.uge.reddit.dto;
 
 import javax.validation.constraints.NotBlank;
 
-public class PostDTO {
+public class TopicDTO {
     @NotBlank
     private String title;
     @NotBlank

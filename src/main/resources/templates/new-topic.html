@@ -5,16 +5,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <h1>New post</h1>
-    <form th:action="@{/subject/post}" th:object="${post}" method="post">
+    <h1>New topic</h1>
+    <form th:action="@{/topic/create}" th:object="${topic}" method="post">
         <div>
             <label for="title_input">Title</label>
             <input th:field="*{title}" id="title_input" type="text" name="title">
             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
         </div>
 
-        <div><label for="body_input">Body</label>
+        <div>
+            <label for="body_input">Body</label>
             <textarea th:field="*{body}" type="text" id="body_input" name="body"/>
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
         </div>
         <div>
             <button type="submit">Post</button>

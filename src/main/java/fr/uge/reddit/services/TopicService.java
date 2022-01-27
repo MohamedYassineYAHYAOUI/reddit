@@ -1,6 +1,6 @@
 package fr.uge.reddit.services;
 
-import fr.uge.reddit.entity.PostEntity;
+import fr.uge.reddit.entity.TopicEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,38 +15,33 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 @Service
-public class PostService {
+public class TopicService {
     @Autowired
-    PostServiceWithFailure postServiceWithFailure;
+    TopicServiceWithFailure topicServiceWithFailure;
 
-    @PersistenceUnit
-    EntityManagerFactory emf;
-
-    @PersistenceContext
-    EntityManager em;
 
     @Transactional
-    public void createNewPost(PostEntity post){
+    public void createNewTopic(TopicEntity topic){
         var retry=true;
         while(retry) {
             retry=false;
             try {
-                postServiceWithFailure.createNewPostWrong(post);
+                topicServiceWithFailure.createNewTopicWrong(topic); //!!!!!!!!!!
             } catch (org.springframework.orm.ObjectOptimisticLockingFailureException e){
                 retry=true;
             }
         }
     }
 
-    public List<PostEntity> getAllPosts(){
-        var posts = StreamSupport
-                .stream(postServiceWithFailure.getPostRepository().findAll().spliterator(), false)
+    public List<TopicEntity> getAllTopics(){
+        var topics = StreamSupport
+                .stream(topicServiceWithFailure.getTopicRepository().findAll().spliterator(), false)
                 .collect(Collectors.toList());
-        return posts;
+        return topics;
     }
 
-    public Optional<PostEntity> getPost(long id){
-        var post = postServiceWithFailure.getPostRepository().findById(id);
-        return post;
+    public Optional<TopicEntity> getTopic(long id){
+        var topic = topicServiceWithFailure.getTopicRepository().findById(id);
+        return topic;
     }
 }
