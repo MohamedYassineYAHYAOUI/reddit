@@ -12,6 +12,8 @@
             <summary>
                 <a th:href="@{/u/} + ${message.author}" th:text="${message.author}"/>
                 Score: <span th:text="${message.score}"/>
+                <a th:href="@{/upvote/} + ${message.id}">+</a>
+                <a th:href="@{/downvote/} + ${message.id}">-</a>
             </summary>
 
             <p th:text="${message.body}"/>

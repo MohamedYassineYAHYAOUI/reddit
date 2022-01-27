@@ -12,10 +12,19 @@ import java.util.List;
 public class IndexController {
     // TODO: Replace by actual Message class / DTO
     public static class Message {
+        private Long id;
         private String author;
         private String body;
         private int score;
         private List<Message> replies;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
 
         public String getAuthor() {
             return author;
@@ -52,7 +61,8 @@ public class IndexController {
         public Message() {
         }
 
-        public Message(String author, String body, int score, List<Message> replies) {
+        public Message(Long id, String author, String body, int score, List<Message> replies) {
+            this.id = id;
             this.author = author;
             this.body = body;
             this.score = score;
@@ -82,10 +92,10 @@ public class IndexController {
 
     @ModelAttribute("message")
     public Message message() {
-        return new Message("toto", "hello world", 4,
+        return new Message(0L, "toto", "hello world", 4,
                 List.of(
-                        new Message("titi", "bonjour", 0, null),
-                        new Message("tutu", "aaaaaaaaaaa", -2, null)
+                        new Message(1L, "titi", "bonjour", 0, null),
+                        new Message(2L, "tutu", "aaaaaaaaaaa", -2, null)
                 )
         );
     }
