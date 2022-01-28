@@ -4,7 +4,6 @@ import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.services.AdminService;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -43,14 +42,14 @@ public class TopicController {
             model.addAttribute("topic", topic);
             return "topic";
         }
-        return "redirect:/all";
+        return "redirect:/popular";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteTopic(@PathVariable("id") long topicId, Model model){
-        /*adminService.deletePost(subjectId);*/
+        adminService.deleteTopic(topicId);
 
-        return "redirect:/all";
+        return "redirect:/popular";
     }
 
     @PostMapping("/create")
@@ -64,8 +63,8 @@ public class TopicController {
         newTopic.setTitle(topic.getTitle());
         newTopic.setMessage(message);
         topicService.createNewTopic(newTopic);
-        model.addAttribute("topicService", topicService);
-        return "redirect:/all";
+        //model.addAttribute("topicService", topicService);
+        return "redirect:/popular";
     }
 
     /*

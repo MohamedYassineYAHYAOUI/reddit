@@ -22,11 +22,15 @@ public class HomeController {
 
     @GetMapping("/popular")
     public String getHomePage(Model model) {
-
+      var topicsModel = topicService.getAllTopics();
+      //model.addAttribute();
       return "home_page";
     }
 
-
+    @GetMapping("/")
+    public String index(Model model) {
+        return "redirect:/popular";
+    }
 
 
 }

@@ -1,6 +1,8 @@
 package fr.uge.reddit;
 
 
+import fr.uge.reddit.entity.MessageEntity;
+import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.entity.UserRoles;
 import fr.uge.reddit.repository.MessageRepository;
@@ -11,6 +13,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+
+import java.util.List;
 
 @SpringBootApplication
 public class RedditApplication {
@@ -30,7 +34,7 @@ public class RedditApplication {
             msgRepository.save(msg1);
             msgRepository.save(msg2);
 
-            var post_entity = new PostEntity(post_msg, "test post");
+            var post_entity = new TopicEntity(post_msg, "test post");
             postRepo.save(post_entity);
 
 
