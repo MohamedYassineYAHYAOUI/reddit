@@ -1,8 +1,10 @@
 package fr.uge.reddit.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name= "MESSAGE")
@@ -27,13 +29,20 @@ public class MessageEntity {
     private Date timeStamp;
 
     //TODO :we can inmplement Message parent with field Message parent @Manyto One (cf voir contexte reddit)
-    @OneToMany(cascade = CascadeType.ALL) // a vérifier si all ou DELEt
-    @JoinColumn(name="MESSAGEID")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true) // a vérifier si all ou DELEt
+    @JoinColumn(name="REPLYID")
     private List<MessageEntity> replies;
 
 
     public MessageEntity(){};
 
+    public MessageEntity(UserEntity author, String body,Date timeStamp) {
+        this.author = Objects.requireNonNull(author);
+        this.body = Objects.requireNonNull(body);
+        this.score = 0;
+        this.timeStamp = timeStamp;//Objects.requireNonNull(timeStamp);
+        this.replies = new ArrayList<>();
+    }
 
     public Long getId() {
         return id;

@@ -27,16 +27,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
                 .authorizeRequests()
-                .antMatchers("/", "/index", "/register","/redirect","/css/*", "/webjars/**", "/assets/**", "/js/*").permitAll()
-                .antMatchers("/subject/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/","/all","/popular", "/index", "/register","/redirect","/css/*", "/webjars/**", "/assets/**", "/js/*").permitAll()
+                .antMatchers("/topic/**").hasAnyRole("ADMIN", "USER")
+                //.antMatchers("/subject/delete/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll() // TODO : implementer un custom login page
+                .loginPage("/login").permitAll()
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/", false)
+                .defaultSuccessUrl("/popular", false)
                 .and()
                 .logout()
                     .logoutUrl("/logout").permitAll()
