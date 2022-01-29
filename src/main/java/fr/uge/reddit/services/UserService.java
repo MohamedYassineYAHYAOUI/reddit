@@ -3,6 +3,7 @@ package fr.uge.reddit.services;
 import fr.uge.reddit.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -28,7 +29,9 @@ public class UserService {
         }
     }
 
-
+    public static UserEntity currentUser() {
+        return (UserEntity) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    }
 
 
 }

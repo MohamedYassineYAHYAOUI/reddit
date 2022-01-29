@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Reddit</title>
@@ -7,6 +8,10 @@
 <body>
     <h1 th:text="${topic.getTitle()}"></h1>
 
-    <p th:text="${topic.getMessage()}"></p> <!-- marche pas -->
+    <div sec:authorize="isAuthenticated()">
+        <div th:replace="message-fragment :: replybox"/>
+    </div>
+
+    <div th:replace="message-fragment :: message(message = ${topic.getMessage()})"/>
 </body>
 </html>

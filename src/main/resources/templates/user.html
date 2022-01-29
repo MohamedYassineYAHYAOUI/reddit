@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reddit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Reddit</h1>
+    <h2 th:text="${user.login}"/>
+
+    <ul style="list-style: none">
+        <li th:each="message : ${messages}">
+            <div th:replace="message-fragment :: message(message = ${message})"/>
+        </li>
+    </ul>
+
+</body>
+</html>

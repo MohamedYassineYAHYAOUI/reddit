@@ -1,9 +1,13 @@
 package fr.uge.reddit.controller;
 
+import fr.uge.reddit.dto.ReplyboxDTO;
 import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
+import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.services.AdminService;
+import fr.uge.reddit.services.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/topic")
@@ -28,8 +33,13 @@ public class TopicController {
     private AdminService adminService;
 
     @ModelAttribute("topic")
-    public TopicDTO credentials() {
+    public TopicDTO topicDTO() {
         return new TopicDTO();
+    }
+
+    @ModelAttribute("replybox")
+    public ReplyboxDTO replyboxDTO() {
+        return new ReplyboxDTO();
     }
 
     @GetMapping("/create")
@@ -37,7 +47,7 @@ public class TopicController {
 
     @GetMapping("/{id}")
     public String getTopicById(@PathVariable("id") long id, Model model){
-        var topic = topicService.getTopic(id).get();
+        var topic = topicService.getTopic(id).orElse(null);
         if(topic != null){
             model.addAttribute("topic", topic);
             return "topic";
@@ -53,17 +63,20 @@ public class TopicController {
     }
 
     @PostMapping("/create")
-    public String createTopic(@Valid @ModelAttribute("subject") TopicDTO topic, BindingResult bindingResult, Model model) {
+    public String createTopic(@Valid @ModelAttribute("topic") TopicDTO topic, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             return "new-topic";
         }
-        TopicEntity newTopic = new TopicEntity();
-        MessageEntity message = new MessageEntity();
+        // var user = UserService.currentUser();
+        var newTopic = new TopicEntity();
+        var message = new MessageEntity();
         message.setBody(topic.getBody());
+        // message.setAuthor(user);
+        message.setTimeStamp(new Date());
         newTopic.setTitle(topic.getTitle());
         newTopic.setMessage(message);
         topicService.createNewTopic(newTopic);
-        //model.addAttribute("topicService", topicService);
+        model.addAttribute("topicService", topicService);
         return "redirect:/popular";
     }
 
