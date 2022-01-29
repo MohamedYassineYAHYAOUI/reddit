@@ -1,5 +1,6 @@
 package fr.uge.reddit.controller;
 
+import fr.uge.reddit.dto.ReplyboxDTO;
 import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
@@ -34,6 +35,11 @@ public class TopicController {
     @ModelAttribute("topic")
     public TopicDTO topicDTO() {
         return new TopicDTO();
+    }
+
+    @ModelAttribute("replybox")
+    public ReplyboxDTO replyboxDTO() {
+        return new ReplyboxDTO();
     }
 
     @GetMapping("/create")
