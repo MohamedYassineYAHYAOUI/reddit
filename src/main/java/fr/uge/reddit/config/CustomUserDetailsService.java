@@ -18,17 +18,21 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 
-        UserEntity userWithSameLogin = userRepository.findByLogin(login);
-        if(userWithSameLogin == null){
+        var userWithSameLogin = userRepository.findByLogin(login);
+        if(userWithSameLogin == null) {
             throw new UsernameNotFoundException("invalid Login or Password");
         }
+
+        // TODO: If we use org.springframework.security.core.userdetails.User, we can't get the ID
+        // and other important informations.
+        // But if we use UserEntity, we can't log in because the login form creates a User.
+
+        // return userWithSameLogin;
+
+
         var pwd = userWithSameLogin.getPassword();
         var user= User.withUsername(userWithSameLogin.getLogin())
                 .password(pwd)
@@ -37,6 +41,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             user.roles("ADMIN");
         }
         return user.build();
+
+
     }
 
 }

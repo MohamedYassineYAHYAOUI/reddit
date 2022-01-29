@@ -7,10 +7,6 @@
 <body>
     <h1 th:text="${topic.getTitle()}"></h1>
 
-<<<<<<< HEAD:src/main/resources/templates/post.html
-    <div th:replace="message-fragment :: message(message = ${post.getMessage})"/>
-=======
-    <p th:text="${topic.getMessage()}"></p> <!-- marche pas -->
->>>>>>> main:src/main/resources/templates/topic.html
+    <div th:replace="message-fragment :: message(message = ${topic.getMessage()})"/>
 </body>
 </html>

@@ -1,14 +1,13 @@
 package fr.uge.reddit.controller;
 
-import fr.uge.reddit.dto.PostDTO;
+import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
-import fr.uge.reddit.entity.PostEntity;
+import fr.uge.reddit.entity.TopicEntity;
+import fr.uge.reddit.services.TopicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import fr.uge.reddit.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,11 +20,11 @@ import javax.validation.Valid;
 @RequestMapping("/subject")
 public class PostController {
     @Autowired
-    PostService postService;
+    TopicService postService;
 
     @ModelAttribute("post")
-    public PostDTO post() {
-        return new PostDTO();
+    public TopicDTO post() {
+        return new TopicDTO();
     }
 
     @GetMapping("/createNewSubject")
@@ -33,7 +32,7 @@ public class PostController {
 
     @GetMapping("/post/{id}")
     public String getPostId(@PathVariable("id") long id, Model model){
-        var post = postService.getPost(id).get();
+        var post = postService.getTopic(id).get();
         if(post != null){
             model.addAttribute("post", post);
             return "post";
@@ -42,16 +41,16 @@ public class PostController {
     }
 
     @PostMapping("/post")
-    public String postPost(@Valid @ModelAttribute("post") PostDTO post, BindingResult bindingResult, Model model) {
+    public String postPost(@Valid @ModelAttribute("post") TopicDTO post, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
             return "new-post";
         }
-        PostEntity newPost = new PostEntity();
+        TopicEntity newPost = new TopicEntity();
         MessageEntity message = new MessageEntity();
         message.setBody(post.getBody());
         newPost.setTitle(post.getTitle());
         newPost.setMessage(message);
-        postService.createNewPost(newPost);
+        postService.createNewTopic(newPost);
         model.addAttribute("postService", postService);
         return "index";
     }

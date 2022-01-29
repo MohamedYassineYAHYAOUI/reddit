@@ -103,7 +103,7 @@ public class IndexController {
     @GetMapping("/")
     public String getIndex(Model model) {
         model.addAttribute("message", message());
-        return "index";
+        return "redirect:/popular";
     }
 
     @GetMapping("/u/{login}")

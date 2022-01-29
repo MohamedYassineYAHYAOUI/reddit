@@ -26,11 +26,4 @@ public class HomeController {
       //model.addAttribute();
       return "home_page";
     }
-
-    @GetMapping("/")
-    public String index(Model model) {
-        return "redirect:/popular";
-    }
-
-
 }
