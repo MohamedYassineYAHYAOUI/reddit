@@ -2,14 +2,15 @@ package fr.uge.reddit.entity;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name="Posts")
-public class PostEntity {
+@Table(name="Topics")
+public class TopicEntity {
 
     @Id
-    @GeneratedValue(generator = "post_gen")
-    @Column(name="POSTID")
+    @GeneratedValue(generator = "topic_gen")
+    @Column(name="TOPICID")
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -19,8 +20,12 @@ public class PostEntity {
     @Column(name="TITLE")
     private String title;
 
-    public PostEntity(){}
+    public TopicEntity(){}
 
+    public TopicEntity(MessageEntity message, String title) {
+        this.message = message;
+        this.title = title;
+    }
 
     public Long getId() {
         return id;

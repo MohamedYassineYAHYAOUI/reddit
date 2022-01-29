@@ -1,5 +1,6 @@
 package fr.uge.reddit.dto;
 
+import fr.uge.reddit.entity.UserRoles;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 

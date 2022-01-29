@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Reddit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <p>Reddit - menu placement</p>
+
+    <ul>
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/login}">Log in</a></li>
+        <li sec:authorize="!isAuthenticated()"><a th:href="@{/register}">register</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}">Log out</a></li>
+        <li sec:authorize="isAuthenticated()"><a th:href="@{/topic/create}">Create a new topic</a></li>
+        <li><a th:href="@{/redirect?to=https://www.reddit.com}">The true Reddit</a></li>
+    </ul>
+    <h2>Posts</h2>
+    <div th:if="${topicService != null}">
+        <div>
+            <ul>
+                <li th:each="line : ${topicService.getAllTopics()}">
+                    <a th:href="@{/topic/{id}(id=${line.getId()})}" th:text="${line.getTitle()}"></a>
+                    <form th:action="@{/topic/delete/{id}(id=${line.getId()})}" method="post">
+                        <button style="font-size:14px">Delete<i class="fa fa-trash-o"></i></button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

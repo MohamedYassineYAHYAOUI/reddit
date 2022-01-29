@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-public class UserLoginCreateController {
+public class LoginRegisterController {
 
     @Autowired
     private UserService userService;
@@ -43,7 +43,6 @@ public class UserLoginCreateController {
         model.addAttribute("credentials",credentials );
         model.addAttribute("registered_successfully", false);
         if(bindingResult.hasErrors()){
-            // model.addAttribute(); error login exist
             return "register_user_form";
         }
         try{
