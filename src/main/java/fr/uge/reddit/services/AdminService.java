@@ -27,6 +27,8 @@ public class AdminService {
             return;
         }
         var replies = postEntity.getMessage().getReplies();
+        System.out.println("----------------");
+        System.out.println(replies);
         //replies.forEach(r-> System.out.println(r.getScore() + " "+r.getAuthor()+ " "+r.getBody()));
         for (var r: replies) {
             System.out.println("replie "+r.getBody());

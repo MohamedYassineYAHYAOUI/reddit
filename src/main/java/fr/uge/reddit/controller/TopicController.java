@@ -3,7 +3,9 @@ package fr.uge.reddit.controller;
 import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
+import fr.uge.reddit.entity.TopicSortEnum;
 import fr.uge.reddit.services.AdminService;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,6 +19,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.time.Instant;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/topic")
@@ -42,14 +49,14 @@ public class TopicController {
             model.addAttribute("topic", topic);
             return "topic";
         }
-        return "redirect:/popular";
+        return "redirect:/";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteTopic(@PathVariable("id") long topicId, Model model){
         adminService.deleteTopic(topicId);
 
-        return "redirect:/popular";
+        return "redirect:/";
     }
 
     @PostMapping("/create")
@@ -60,20 +67,14 @@ public class TopicController {
         TopicEntity newTopic = new TopicEntity();
         MessageEntity message = new MessageEntity();
         message.setBody(topic.getBody());
+        message.setTimeStamp(Date.from(Instant.now()));
         newTopic.setTitle(topic.getTitle());
         newTopic.setMessage(message);
         topicService.createNewTopic(newTopic);
-        //model.addAttribute("topicService", topicService);
-        return "redirect:/popular";
+
+        return "redirect:/";
     }
 
-    /*
-    @GetMapping("/topics")
-    public String topics(@RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-                         @RequestParam(value = "size", required = false, defaultValue = "5")int size,
-                         Model model){
-        var topics = topicService.findPaginated(PageRequest.of(pageNumber-1 , size));
 
-    }*/
 
 }

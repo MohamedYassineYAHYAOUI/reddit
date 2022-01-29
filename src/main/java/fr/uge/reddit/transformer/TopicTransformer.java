@@ -6,11 +6,13 @@ import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.services.TopicService;
 import fr.uge.reddit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Component
 public class TopicTransformer implements Transformer<TopicDTO, TopicEntity> {
 
     @Autowired
@@ -46,6 +48,7 @@ public class TopicTransformer implements Transformer<TopicDTO, TopicEntity> {
             return null;
         }
         var dto = new TopicDTO();
+        dto.setId(model.getId());
         dto.setTitle(model.getTitle());
         dto.setBody(model.getMessage().getBody());
         dto.setScore(model.getMessage().getScore());

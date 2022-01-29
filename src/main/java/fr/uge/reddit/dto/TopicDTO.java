@@ -11,6 +11,8 @@ public class TopicDTO {
     @NotBlank
     private String body;
 
+    private Long id;
+
     private int score;
 
     private String author;
@@ -19,7 +21,8 @@ public class TopicDTO {
 
     private List<MessageDTO> replies;
 
-    public TopicDTO(String title, String body, int score, String author, Date timeStamp, List<MessageDTO> replies) {
+    public TopicDTO(Long id, String title, String body, int score, String author, Date timeStamp, List<MessageDTO> replies) {
+        this.id = id;
         this.title = title;
         this.body = body;
         this.score = score;
@@ -28,11 +31,16 @@ public class TopicDTO {
         this.replies = replies;
     }
     public TopicDTO(){
-        this(null,null,0,null, null, new ArrayList<>());
+        this(null,null,null,0,null, null, new ArrayList<>());
     };
 
-    public TopicDTO(String title, String body,List<MessageDTO> replies){
-        this(title, body, 0,null,null, new ArrayList<>());
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {

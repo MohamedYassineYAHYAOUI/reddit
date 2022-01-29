@@ -21,10 +21,37 @@
         <li><a th:href="@{/redirect?to=https://www.reddit.com}">The true Reddit</a></li>
     </ul>
     <h2>Posts</h2>
-    <div th:if="${topicService != null}">
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>title<th/>
+            <th>score<th/>
+            <th>ts<th/>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="topic: ${topicsPage}">
+            <td th:text="${topic.title}" />
+            <td th:text="${topic.message.score}" />
+            <td th:text="${#dates.format(topic.message.timeStamp, 'dd-MM-yyyy HH:mm')}" />
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${topicsPage.totalPages > 0}" class="pagination"
+         th:each="pageNumber : ${pageNumbers}">
+        <a th:href="@{'/?by=best&size='+${topicsPage.size}+'&pageNumber='+${pageNumber}}"
+           th:text=${pageNumber}
+           th:class="${pageNumber==topicsPage.number + 1} ? active"></a>
+    </div>
+
+
+
+    <!--
+    <div th:if="${topics != null}">
         <div>
             <ul>
-                <li th:each="line : ${topicService.getAllTopics()}">
+                <li th:each="line : ${topics}">
                     <a th:href="@{/topic/{id}(id=${line.getId()})}" th:text="${line.getTitle()}"></a>
                     <form th:action="@{/topic/delete/{id}(id=${line.getId()})}" method="post">
                         <button style="font-size:14px">Delete<i class="fa fa-trash-o"></i></button>
@@ -33,6 +60,6 @@
             </ul>
         </div>
     </div>
-
+    -->
 </body>
 </html>
