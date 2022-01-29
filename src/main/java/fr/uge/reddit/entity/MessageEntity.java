@@ -28,12 +28,8 @@ public class MessageEntity {
 
     //TODO :we can inmplement Message parent with field Message parent @Manyto One (cf voir contexte reddit)
     @OneToMany(cascade = CascadeType.ALL) // a vérifier si all ou DELEt
-    @JoinColumn(name="MESSAGEID")
+    @JoinColumn(name="REPLYID")
     private List<MessageEntity> replies;
-
-
-    public MessageEntity(){};
-
 
     public Long getId() {
         return id;

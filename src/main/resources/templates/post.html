@@ -7,6 +7,6 @@
 <body>
     <h1 th:text="${post.getTitle()}"></h1>
 
-    <p th:text="${post.getMessage()}"></p> <!-- marche pas -->
+    <div th:replace="message-fragment :: message(message = ${post.getMessage})"/>
 </body>
 </html>
