@@ -15,9 +15,9 @@
                 Score: <span th:text="${message.score}"/>
                 <a th:href="@{/upvote/} + ${message.id}">+</a>
                 <a th:href="@{/downvote/} + ${message.id}">-</a>
-                <div sec:authorize="isAuthenticated()">
+                <span sec:authorize="isAuthenticated()">
                     <a href="#replybox" th:onclick="'prepareReplybox(' + ${message.id} + ')'">Reply</a>
-                </div>
+                </span>
             </summary>
 
             <p th:text="${message.body}"/>
