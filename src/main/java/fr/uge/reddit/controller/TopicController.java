@@ -43,7 +43,7 @@ public class TopicController {
             model.addAttribute("topic", topic);
             return "topic";
         }
-        return "redirect:/all";
+        return "redirect:/popular";
     }
 
     @PostMapping("/delete/{id}")
@@ -65,7 +65,7 @@ public class TopicController {
         newTopic.setMessage(message);
         topicService.createNewTopic(newTopic);
         model.addAttribute("topicService", topicService);
-        return "redirect:/all";
+        return "redirect:/popular";
     }
 
     /*
