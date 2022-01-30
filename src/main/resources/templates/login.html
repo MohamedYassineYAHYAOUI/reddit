@@ -6,25 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Reddit - Login</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style th:replace="Menu_bar :: drop_down_style"/>
 </head>
 <body>
 
-    <div sec:authorize="isAuthenticated()">
+    <div th:replace="Menu_bar :: navBar_login_logout_register"/>
+
+    <div sec:authorize="isAuthenticated()" class="container pt-5">
         <p>
         Hello there <b><span th:text="${#authentication.name}"/></b>!<br>
         Seems you are already loged in, you will be redirected to the main page in a few seconds.
            <script th:inline="javascript">
             /*<![CDATA[*/
                 var timer = setTimeout(function() {
-                window.location=[[${@environment.getProperty('url.app.popular')}]]
+                window.location=[[${@environment.getProperty('url.app.index')}]]
             }, 7000);
             /*]]>*/
             </script>
         </p>
     </div>
 
-    <div sec:authorize="!isAuthenticated()" class="container">
-        <h2 class="d-flex justify-content-center form-signin-heading">Welcome to Reddit, please login</h2>
+    <div sec:authorize="!isAuthenticated()" class="container pt-5">
+
         <div class="d-flex justify-content-center">
             <div th:if="${param.error}" class="alert alert-danger">
                 Invalid username or password.
