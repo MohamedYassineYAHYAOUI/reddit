@@ -43,7 +43,7 @@
         <form th:action="@{/reply}" th:object="${replybox}" method="post">
             <div>
                 <label for="reply_to_input" disabled>Replying to</label>
-                <input th:field="*{to}" id="reply_to_input" type="text" name="to" disabled>
+                <input th:field="*{to}" id="reply_to_input" type="text" name="to" readonly>
                 <p th:if="${#fields.hasErrors('to')}" th:errors="*{to}" />
             </div>
             <div>
