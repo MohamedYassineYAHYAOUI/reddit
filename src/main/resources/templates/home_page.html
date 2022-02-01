@@ -7,7 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Reddit</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <style th:replace="Menu_bar :: drop_down_style"/>
+    <!--<style th:replace="Menu_bar :: drop_down_style"/>-->
+    <link rel="stylesheet" href="/css/drop_down_style_file.css"/>
 
 
 </head>
@@ -15,46 +16,8 @@
 
 <div th:replace="Menu_bar :: navBar"/>
 
-    <h2>Posts</h2>
-
-    <table border="1">
-        <thead>
-        <tr>
-            <th>title<th/>
-            <th>score<th/>
-            <th>ts<th/>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="topic: ${topicsPage}">
-            <td th:text="${topic.title}" />
-            <td th:text="${topic.message.score}" />
-            <td th:text="${#dates.format(topic.message.timeStamp, 'dd-MM-yyyy HH:mm')}" />
-        </tr>
-        </tbody>
-    </table>
-    <div th:if="${topicsPage.totalPages > 0}" class="pagination"
-         th:each="pageNumber : ${pageNumbers}">
-        <a th:href="@{'/?by=best&size='+${topicsPage.size}+'&pageNumber='+${pageNumber}}"
-           th:text=${pageNumber}
-           th:class="${pageNumber==topicsPage.number + 1} ? active"></a>
-    </div>
+<div th:replace="topics_pagination :: topicsPagination(${topicsPage}, ${pageNumbers})"/>
 
 
-
-    <!--
-    <div th:if="${topics != null}">
-        <div>
-            <ul>
-                <li th:each="line : ${topics}">
-                    <a th:href="@{/topic/{id}(id=${line.getId()})}" th:text="${line.getTitle()}"></a>
-                    <form th:action="@{/topic/delete/{id}(id=${line.getId()})}" method="post">
-                        <button style="font-size:14px">Delete<i class="fa fa-trash-o"></i></button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </div>
-    -->
 </body>
 </html>

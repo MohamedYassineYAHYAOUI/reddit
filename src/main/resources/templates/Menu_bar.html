@@ -6,48 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>nav bar</title>
-
-
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <!--<link rel="stylesheet" href="/css/style_file.css"/>-->
-    <!-- le fichier css ne charge pas donc je le mets la -->
-    <style th:fragment="drop_down_style">
-
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.navTitle {
-    color: #F8F1F1;
-}
-
-.buttons{
-display: inline-flex;
-}
-
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-.dropdown a:hover {background-color: #ddd;}
-
-.show {display: block;}
-</style>
+    <link rel="stylesheet" href="/css/drop_down_style_file.css"/>
 
 </head>
 <body>
@@ -103,15 +63,10 @@ display: inline-flex;
                     </li>
 
 
-                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown pt-2">
                         <div class="dropdown">
                             <a onclick="myFunction()" class="nav-link dropdown-toggle btn-outline-light">
-                                <img
-                                        src="https://thumbs.dreamstime.com/b/user-icon-flat-style-person-icon-user-icon-web-site-user-icon-vector-illustration-user-icon-flat-style-person-icon-user-129831161.jpg"
-                                        class="rounded-circle"
-                                        height="25"
-                                        loading="lazy"
-                                />
+                                <span th:text="${#authentication.name}"/>
                             </a>
                             <div id="myDropdown" class="dropdown-content">
                                 <a th:href="'u/'+${#authentication.name}">My page</a>

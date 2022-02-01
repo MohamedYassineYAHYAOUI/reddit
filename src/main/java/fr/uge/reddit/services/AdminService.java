@@ -21,10 +21,20 @@ public class AdminService {
     @Transactional
     public void deleteTopic(long postId){
         Objects.requireNonNull(postId);
-        System.out.println("---postId "+postId);
+
+        var message = messageRepository.findById(3L);
+        if(message.isEmpty()){
+            throw new IllegalArgumentException("error");
+        }
+        var entity = message.get();
+        System.out.println(entity.getBody());
+        System.out.println(entity.getReplies());
+
+        //System.out.println("---postId "+postId);
+        /*
         var postEntity = topicRepository.findByIdWithReplies(postId);
         if(postEntity == null){
-            return;
+            throw new IllegalArgumentException("id doesn't match a topic");
         }
         var replies = postEntity.getMessage().getReplies();
         System.out.println("----------------");
@@ -38,7 +48,9 @@ public class AdminService {
         //replies.forEach(r->messageRepository.delete(r));
 
         //topicRepository.delete(postEntity);
+    */
     }
+
 
     
 }

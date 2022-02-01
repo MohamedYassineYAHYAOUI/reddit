@@ -16,7 +16,7 @@ import java.util.List;
 public interface TopicRepository extends PagingAndSortingRepository<TopicEntity, Long> {
 
 
-    @Query("SELECT t FROM TopicEntity t JOIN FETCH t.message m JOIN FETCH m.replies WHERE t.id = :topicEntity")
+    @Query("SELECT t FROM TopicEntity t LEFT JOIN FETCH t.message m WHERE t.id = :topicEntity")
     public TopicEntity findByIdWithReplies(@Param("topicEntity") Long topicEntity);
 
     @Query("SELECT t FROM TopicEntity t JOIN t.message m ORDER BY m.timeStamp ASC")
