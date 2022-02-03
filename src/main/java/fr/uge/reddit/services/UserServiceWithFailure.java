@@ -30,4 +30,30 @@ public class UserServiceWithFailure{
         userRepository.save(new UserEntity(user.getLogin(),passwordEncoder.encode(user.getPassword()), user.getUserRole()));
     }
 
+    @Transactional
+    public UserEntity findUserWithFailure(String login) throws IllegalArgumentException{
+        var userFind = userRepository.findByLogin(login);
+        if(userFind == null){
+            throw new IllegalArgumentException("User not found");
+        }
+        return userFind;
+    }
+
+    @Transactional
+    public void updateUserPasswordWithFailure(String login, String newPassword) throws IllegalArgumentException{
+        var userFind = userRepository.findByLogin(login);
+        if(userFind == null){
+            throw new IllegalArgumentException("User not found for update password");
+        }
+        userFind.setPassword(passwordEncoder.encode(newPassword));
+    }
+
+    @Transactional
+    public boolean checkUserOldPasswordMatchWithFailure(String login, String oldPassword) throws IllegalArgumentException{
+        var userFind = userRepository.findByLogin(login);
+        if(userFind == null){
+            throw new IllegalArgumentException("User not found for check password");
+        }
+        return passwordEncoder.matches(oldPassword, userFind.getPassword());
+    }
 }

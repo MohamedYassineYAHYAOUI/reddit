@@ -31,7 +31,45 @@ public class UserService {
         }
     }
 
+    @Transactional
+    public UserEntity findUser(String login) throws IllegalArgumentException{
+        var retry = true;
+        UserEntity user = null;
+        while(retry){
+            retry=false;
+            try{
+                user = userServiceWithFailure.findUserWithFailure(login);
+            }catch(ObjectOptimisticLockingFailureException e){
+                retry = true;
+            }
+        }
+        return user;
+    }
 
+    @Transactional
+    public void updatePassword(String login, String password) throws IllegalArgumentException{
+        var retry = true;
+        while(retry){
+            retry=false;
+            try{
+                userServiceWithFailure.updateUserPasswordWithFailure(login, password);
+            }catch(ObjectOptimisticLockingFailureException e){
+                retry = true;
+            }
+        }
+    }
 
-
+    @Transactional
+    public boolean checkUserOldPasswordMatch(String login, String oldPassword) throws IllegalArgumentException{
+        var retry = true;
+        while(retry){
+            retry=false;
+            try{
+                return userServiceWithFailure.checkUserOldPasswordMatchWithFailure(login, oldPassword);
+            }catch(ObjectOptimisticLockingFailureException e){
+                retry = true;
+            }
+        }
+        return false;
+    }
 }

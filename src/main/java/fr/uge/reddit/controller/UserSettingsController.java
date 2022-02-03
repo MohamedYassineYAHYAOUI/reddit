@@ -1,8 +1,12 @@
 package fr.uge.reddit.controller;
 
+import fr.uge.reddit.dto.CredentialsDTO;
 import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,18 +22,30 @@ public class UserSettingsController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/password")
+    @GetMapping("/settings")
     public String changePasswordPage(Model model){
-        model.addAttribute("userAttribute", new UserEntity()); //A remplacer par l'utilisateur actuellement connecté sur la session
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CredentialsDTO credentials = new CredentialsDTO();
+        credentials.setLogin(authentication.getName());
+        model.addAttribute("credentials", credentials);
         return "config_password";
     }
 
-    @PostMapping("/password")
-    public String changePassword(@Valid @ModelAttribute("userAttribute") UserEntity user,
+    @PostMapping("/settings")
+    public String changePassword(@Valid @ModelAttribute("credentials") CredentialsDTO credentials,
+                                 //@Value("oldPassword") String oldPassword,
                                  BindingResult bindingResult,
                                  Model model){
-        if(bindingResult.hasErrors()){
+        model.addAttribute("credentials",credentials);
+        //Check de l'ancien mdp non fonctionnel
+        if(bindingResult.hasErrors() /*|| !userService.checkUserOldPasswordMatch(credentials.getLogin(), oldPassword)*/){
             return "redirect:/all";
+        }
+        try {
+            userService.updatePassword(credentials.getLogin(), credentials.getPassword());
+        }catch(IllegalArgumentException e){
+            model.addAttribute("err_msg", e.getMessage());
+            return "config_password";
         }
         return "config_password";
     }
