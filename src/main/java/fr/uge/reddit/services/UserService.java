@@ -38,7 +38,6 @@ public class UserService {
 
     public UserEntity currentUser() {
         var user = (UserDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        System.out.println("user >>> " + user.getUsername());
         return userServiceWithFailure.getUserRepository().findByLogin(user.getUsername());
     }
 
