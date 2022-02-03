@@ -31,7 +31,7 @@ public interface TopicRepository extends PagingAndSortingRepository<TopicEntity,
     @Query("SELECT t FROM TopicEntity t JOIN t.message m ORDER BY m.score DESC")
     public Page<TopicEntity> findAllOrderedByBest(Pageable request);
 
-
-
+    @Query("SELECT t FROM TopicEntity t LEFT JOIN t.message.replies r where t.id = :id")
+    public TopicEntity findTopicById(@Param("id") Long id);
 
 }

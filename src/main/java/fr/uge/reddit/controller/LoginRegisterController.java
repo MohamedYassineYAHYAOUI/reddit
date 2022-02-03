@@ -36,7 +36,6 @@ public class LoginRegisterController {
         return "register_user_form";
     }
 
-
     @PostMapping("/register")
     public String createUser(@Valid @ModelAttribute("credentials") CredentialsDTO credentials,
                              BindingResult bindingResult, Model model){

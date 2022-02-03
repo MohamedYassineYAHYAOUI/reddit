@@ -23,7 +23,7 @@ public class RedditApplication {
     public CommandLineRunner initAdmin(UserService userService, TopicRepository postRepo, UserRepository userRepo, MessageRepository msgRepository){
         return args -> {
             userService.createNewUserAccount(new UserEntity("admin","admin", UserRoles.ADMIN)); // TODO: mettre dans les logins dans properties
-            var user =new UserEntity("momo","test", UserRoles.USER);
+            /*var user =new UserEntity("momo","test", UserRoles.USER);
             userRepo.save(user);
 
 
@@ -51,7 +51,7 @@ public class RedditApplication {
                     msg1_1
             ));
 
-
+*/
         };
     }
 

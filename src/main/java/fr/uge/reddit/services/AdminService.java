@@ -22,33 +22,17 @@ public class AdminService {
     public void deleteTopic(long postId){
         Objects.requireNonNull(postId);
 
-        var message = messageRepository.findById(3L);
-        if(message.isEmpty()){
-            throw new IllegalArgumentException("error");
+        var topicOpt = topicRepository.findTopicById(postId);
+        if(topicOpt == null){
+            throw new IllegalArgumentException("Post doesn't exist");
         }
-        var entity = message.get();
-        System.out.println(entity.getBody());
-        System.out.println(entity.getReplies());
-
-        //System.out.println("---postId "+postId);
-        /*
-        var postEntity = topicRepository.findByIdWithReplies(postId);
-        if(postEntity == null){
-            throw new IllegalArgumentException("id doesn't match a topic");
+        var topicMsg = topicOpt.getMessage();
+        var replies = topicMsg.getReplies();
+        for(var msg: replies){
+            messageRepository.delete(msg);
         }
-        var replies = postEntity.getMessage().getReplies();
-        System.out.println("----------------");
-        System.out.println(replies);
-        //replies.forEach(r-> System.out.println(r.getScore() + " "+r.getAuthor()+ " "+r.getBody()));
-        for (var r: replies) {
-            System.out.println("replie "+r.getBody());
-            for(var r1: r.getReplies()){
-                System.out.println("replie2 "+r.getBody());            }
-        }
-        //replies.forEach(r->messageRepository.delete(r));
-
-        //topicRepository.delete(postEntity);
-    */
+        messageRepository.delete(topicMsg);
+        topicRepository.delete(topicOpt);
     }
 
 

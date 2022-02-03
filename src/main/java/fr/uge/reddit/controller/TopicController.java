@@ -3,9 +3,7 @@ package fr.uge.reddit.controller;
 import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
-import fr.uge.reddit.entity.TopicSortEnum;
 import fr.uge.reddit.services.AdminService;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,9 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.time.Instant;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/topic")
@@ -46,7 +41,9 @@ public class TopicController {
     public String getTopicById(@PathVariable("id") long id, Model model){
         var topic = topicService.getTopic(id).get();
         if(topic != null){
+            System.out.println("tpopic foind ---");
             model.addAttribute("topic", topic);
+
             return "topic";
         }
         return "redirect:/";
@@ -55,7 +52,6 @@ public class TopicController {
     @PostMapping("/delete/{id}")
     public String deleteTopic(@PathVariable("id") long topicId, Model model){
         adminService.deleteTopic(topicId);
-
         return "redirect:/";
     }
 
