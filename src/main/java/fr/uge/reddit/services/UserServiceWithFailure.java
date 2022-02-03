@@ -1,6 +1,7 @@
 package fr.uge.reddit.services;
 
 import fr.uge.reddit.entity.UserEntity;
+import fr.uge.reddit.repository.TopicRepository;
 import fr.uge.reddit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,5 +31,7 @@ public class UserServiceWithFailure{
         userRepository.save(new UserEntity(user.getLogin(),passwordEncoder.encode(user.getPassword()), user.getUserRole()));
     }
 
-
+    public UserRepository getUserRepository() {
+        return userRepository;
+    }
 }
