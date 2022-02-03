@@ -5,6 +5,7 @@ import fr.uge.reddit.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 
@@ -35,8 +36,10 @@ public class UserService {
         }
     }
 
-    public static UserEntity currentUser() {
-        return (UserEntity) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+    public UserEntity currentUser() {
+        var user = (UserDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        System.out.println("user >>> " + user.getUsername());
+        return userServiceWithFailure.getUserRepository().findByLogin(user.getUsername());
     }
 
     public Optional<UserEntity> getUser(long id){
