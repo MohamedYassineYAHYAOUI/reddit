@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
@@ -33,12 +34,15 @@ public class UserSettingsController {
 
     @PostMapping("/settings")
     public String changePassword(@Valid @ModelAttribute("credentials") CredentialsDTO credentials,
-                                 //@Value("oldPassword") String oldPassword,
+                                 HttpServletRequest request,
                                  BindingResult bindingResult,
                                  Model model){
         model.addAttribute("credentials",credentials);
-        //Check de l'ancien mdp non fonctionnel
-        if(bindingResult.hasErrors() /*|| !userService.checkUserOldPasswordMatch(credentials.getLogin(), oldPassword)*/){
+        String oldPassword = request.getParameter("oldPassword");
+        if(bindingResult.hasErrors() || !userService.checkUserOldPasswordMatch(credentials.getLogin(), oldPassword)){
+            return "redirect:/all";
+        }
+        if(oldPassword.equals(credentials.getPassword())){
             return "redirect:/all";
         }
         try {
