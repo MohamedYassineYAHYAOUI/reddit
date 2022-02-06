@@ -23,15 +23,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private CustomUserDetailsService customUserDetailsService;
 
 
-    //NB : il faut évoluer ces critère en fonction des nouvelles ressources
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/","/static/**", "/index", "/register","/redirect","/css/**", "/webjars/**", "/assets/**", "/js/**").permitAll()
+
+                .antMatchers("/topic/delete/**").hasAnyRole("ADMIN")
                 .antMatchers("/topic/**").hasAnyRole("ADMIN", "USER")
-                //.antMatchers("/subject/delete/**").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
+                .and().exceptionHandling().accessDeniedPage("/error")
                 .and()
                 .formLogin()
                 .loginPage("/login").permitAll()
