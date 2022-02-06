@@ -17,25 +17,6 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-10 mt-5 mb-5">
-                <table id="posts" class="table table-bordered table-responsive-sm">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>score</th>
-                        <th>time stamp</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="topic : ${topicsPage}">
-                        <td th:text="${topic.id}">id</td>
-                        <td th:text="${topic.title}">title</td>
-                        <td th:text="${topic.message.score}">score</td>
-                        <td th:text="${#dates.format(topic.message.timeStamp, 'dd-MM-yyyy HH:mm')}" />
-                    </tr>
-                    </tbody>
-                </table>
-
 
                 <div>
                     <div class="card w-100 pt-10" th:each="topic :${topicsPage}">
@@ -94,25 +75,6 @@
                         </div>
                     </div>
                 </div>
-
-                <nav aria-label="Page navigation" class="paging">
-                    <ul class="pagination" >
-                        <li class="page-item" th:classappend="${!topicsPage.hasPrevious()? 'disabled' : ''}">
-                            <a class="page-link" th:href="@{'/?size='+${topicsPage.size}+'&pageNumber='+${topicsPage.getNumber()}}"
-                               tabindex="-1">Previous</a>
-                        </li>
-
-                        <th:block th:each="pageNumber : ${pageNumbers}">
-                            <li class="page-item"  th:classappend="${pageNumber == (topicsPage.getNumber()+1)}? 'active'">
-                                <a class="page-link" th:href="@{'/?size='+${topicsPage.size}+'&pageNumber='+${pageNumber}}"
-                                   th:text="${pageNumber}"></a>
-                            </li>
-                        </th:block>
-                        <li class="page-item" th:classappend="${!topicsPage.hasNext()? 'disabled' : ''}">
-                            <a class="page-link" th:href="@{'/?size='+${topicsPage.size}+'&pageNumber='+${topicsPage.getNumber() + 2}}">Next</a>
-                        </li>
-                    </ul>
-                </nav>
 
             </div>
         </div>
