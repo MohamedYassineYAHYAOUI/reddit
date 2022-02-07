@@ -1,6 +1,7 @@
 package fr.uge.reddit.services;
 
 import fr.uge.reddit.entity.UserEntity;
+import fr.uge.reddit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
@@ -16,19 +17,21 @@ public class UserService {
     private UserServiceWithFailure userServiceWithFailure;
 
     @Transactional
-    public void createNewUserAccount(UserEntity user) throws IllegalArgumentException{
+    public void createNewUserAccount(UserEntity user) throws IllegalArgumentException {
         var retry = true;
-        while(retry){
-            retry=false;
-            try{
+        while (retry) {
+            retry = false;
+            try {
                 userServiceWithFailure.createUserWithFailure(user);
-            }catch(ObjectOptimisticLockingFailureException e){
+            } catch (ObjectOptimisticLockingFailureException e) {
                 retry = true;
             }
         }
     }
 
-
+    public UserEntity currentUser() {
+        return userServiceWithFailure.getUserRepository().findByLogin("admin");
+    }
 
 
 }

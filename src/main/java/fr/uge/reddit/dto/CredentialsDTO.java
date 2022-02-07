@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -14,6 +15,8 @@ public class CredentialsDTO  {
     private String login;
     @NotBlank(message = "Password must not be blank")
     private String password;
+
+    private List<VotesDTO> votes;
 
     public String getLogin() {
         return login;
@@ -29,6 +32,14 @@ public class CredentialsDTO  {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<VotesDTO> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<VotesDTO> votes) {
+        this.votes = votes;
     }
 
     @Override

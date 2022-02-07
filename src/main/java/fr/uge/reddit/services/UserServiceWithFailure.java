@@ -29,5 +29,8 @@ public class UserServiceWithFailure{
         }
         userRepository.save(new UserEntity(user.getLogin(),passwordEncoder.encode(user.getPassword()), user.getUserRole()));
     }
+    public UserRepository getUserRepository (){
+        return userRepository;
+    }
 
 }

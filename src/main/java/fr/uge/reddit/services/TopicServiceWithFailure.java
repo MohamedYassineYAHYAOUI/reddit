@@ -16,8 +16,8 @@ public class TopicServiceWithFailure {
     public void createNewTopic(TopicEntity topic){
         topicRepository.save(topic);
     }
-
     public TopicRepository getTopicRepository() {
         return topicRepository;
     }
+
 }

@@ -19,6 +19,8 @@ public class TopicDTO {
 
     private List<MessageDTO> replies;
 
+
+
     public TopicDTO(String title, String body, int score, String author, Date timeStamp, List<MessageDTO> replies) {
         this.title = title;
         this.body = body;
@@ -59,7 +61,6 @@ public class TopicDTO {
         return author;
     }
 
-
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -83,4 +84,6 @@ public class TopicDTO {
     public void setScore(int score) {
         this.score = score;
     }
+
+
 }

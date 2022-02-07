@@ -24,6 +24,7 @@ public class HomeController {
     public String getHomePage(Model model) {
       var topicsModel = topicService.getAllTopics();
       //model.addAttribute();
+        model.addAttribute("topicService", topicService);
       return "home_page";
     }
 

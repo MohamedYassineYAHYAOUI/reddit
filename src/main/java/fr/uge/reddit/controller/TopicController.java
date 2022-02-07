@@ -52,6 +52,8 @@ public class TopicController {
         return "redirect:/popular";
     }
 
+
+
     @PostMapping("/create")
     public String createTopic(@Valid @ModelAttribute("subject") TopicDTO topic, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
@@ -59,11 +61,11 @@ public class TopicController {
         }
         TopicEntity newTopic = new TopicEntity();
         MessageEntity message = new MessageEntity();
-        message.setBody(topic.getBody());
+        /*message.setBody(topic.getBody());
         newTopic.setTitle(topic.getTitle());
-        newTopic.setMessage(message);
+        newTopic.setMessage(message);*/
         topicService.createNewTopic(newTopic);
-        //model.addAttribute("topicService", topicService);
+        model.addAttribute("topicService", topicService);
         return "redirect:/popular";
     }
 

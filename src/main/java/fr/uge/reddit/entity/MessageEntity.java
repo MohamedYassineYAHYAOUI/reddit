@@ -28,6 +28,9 @@ public class MessageEntity {
     @Column(name="TIMESTAMP")
     private Date timeStamp;
 
+    @Version
+    private Long version;
+
     //TODO :we can inmplement Message parent with field Message parent @Manyto One (cf voir contexte reddit)
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval=true) // a vérifier si all ou DELEt
     @JoinColumn(name="REPLYID")
@@ -43,6 +46,7 @@ public class MessageEntity {
         this.timeStamp = timeStamp;//Objects.requireNonNull(timeStamp);
         this.replies = new ArrayList<>();
     }
+
 
     public Long getId() {
         return id;
@@ -90,5 +94,13 @@ public class MessageEntity {
 
     public void setReplies(List<MessageEntity> replies) {
         this.replies = replies;
+    }
+
+    public void inrementScore(){
+        score+=1;
+    }
+
+    public Long getVersion() {
+        return version;
     }
 }
