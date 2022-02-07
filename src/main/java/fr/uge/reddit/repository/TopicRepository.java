@@ -33,5 +33,5 @@ public interface TopicRepository extends PagingAndSortingRepository<TopicEntity,
     TopicEntity findTopicById(@Param("id") Long id);
 
     @Query("SELECT p FROM TopicEntity p WHERE p.message.author.id= :userId")
-    List<TopicEntity> findTopicByUserId(@Param("userId") Long postId);
+    Page<TopicEntity> findTopicByUserId(@Param("userId") Long postId, Pageable request);
 }
