@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reddit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h1>Reddit</h1>
+    <h2 th:text="${user.login}"></h2>
+
+    <div th:if="${topics != null}">
+        <div>
+            <ul>
+                <li th:each="topic : ${topics}">
+                    <div th:replace="topic :: topic(topic = ${topic}, replybox = ${replybox})"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+</html>

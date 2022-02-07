@@ -1,12 +1,14 @@
 package fr.uge.reddit.services;
 
 import fr.uge.reddit.entity.UserEntity;
+import fr.uge.reddit.repository.TopicRepository;
 import fr.uge.reddit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 public class UserServiceWithFailure{
@@ -37,6 +39,11 @@ public class UserServiceWithFailure{
             throw new IllegalArgumentException("User not found");
         }
         return userFind;
+    }
+
+    @Transactional
+    public Optional<UserEntity> findUserByIdWithFailure(long id) throws IllegalArgumentException{
+        return userRepository.findById(id);
     }
 
     @Transactional

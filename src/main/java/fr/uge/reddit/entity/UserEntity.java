@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -57,10 +57,11 @@ public class UserEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority auth = new SimpleGrantedAuthority(userRole.getRole());
-        return Collections.singletonList(auth);
+        var auth = new SimpleGrantedAuthority(userRole.getRole());
+        return List.of(auth);
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
