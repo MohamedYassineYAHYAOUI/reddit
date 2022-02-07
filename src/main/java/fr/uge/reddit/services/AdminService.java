@@ -20,23 +20,13 @@ public class AdminService {
 
     @Transactional
     public void deleteTopic(long postId){
-        Objects.requireNonNull(postId);
-        System.out.println("---postId "+postId);
-        var postEntity = topicRepository.findByIdWithReplies(postId);
-        if(postEntity == null){
-            return;
+        var topicOpt = topicRepository.findTopicById(postId);
+        if(topicOpt == null){
+            throw new IllegalArgumentException("Post doesn't exist");
         }
-        var replies = postEntity.getMessage().getReplies();
-        //replies.forEach(r-> System.out.println(r.getScore() + " "+r.getAuthor()+ " "+r.getBody()));
-        for (var r: replies) {
-            System.out.println("replie "+r.getBody());
-            for(var r1: r.getReplies()){
-                System.out.println("replie2 "+r.getBody());            }
-        }
-        //replies.forEach(r->messageRepository.delete(r));
-
-        //topicRepository.delete(postEntity);
+        topicRepository.delete(topicOpt);
     }
+
 
     
 }

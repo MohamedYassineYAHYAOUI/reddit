@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>nav bar</title>
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/drop_down_style_file.css"/>
+
+</head>
+<body>
+
+
+<div th:fragment="navBar">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <img
+                        src="https://www.logo.wine/a/logo/Reddit/Reddit-Logomark-Color-Logo.wine.svg"
+                        height="40"
+                        width="30"
+                        loading="lazy"
+                />
+                Reddit
+            </a>
+            <div class="collapse navbar-collapse d-flex flex-row-reverse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+
+
+                    <li sec:authorize="isAuthenticated()" class="nav-item">
+                        <a class="nav-link" th:href="@{/topic/create}">
+                            <form class="form-inline">
+                                <button type="button" class="btn btn-outline-light">New topic</button>
+                            </form>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/redirect?to=https://www.reddit.com}">
+                            <form class="form-inline">
+                                <button type="button" class="btn btn-outline-light">Real Reddit</button>
+                            </form>
+                        </a>
+                    </li>
+
+                    <li  sec:authorize="!isAuthenticated()" class="nav-item active">
+                        <a class="nav-link" th:href="@{/login}">
+                            <form class="form-inline">
+                                <button type="button" class="btn btn-outline-primary">Login</button>
+                            </form>
+                        </a>
+                    </li>
+
+                    <li sec:authorize="!isAuthenticated()" class="nav-item">
+                        <a class="nav-link" th:href="@{/register}">
+                            <form class="form-inline">
+                                <button type="button" class="btn btn-secondary">Register</button>
+                            </form>
+                        </a>
+                    </li>
+
+
+                    <li sec:authorize="isAuthenticated()" class="nav-item dropdown pt-2">
+                        <div class="dropdown">
+                            <a onclick="myFunction()" class="nav-link dropdown-toggle btn-outline-light">
+                                <span th:text="${#authentication.name}"/>
+                            </a>
+                            <div id="myDropdown" class="dropdown-content">
+                                <a th:href="'u/'+${#authentication.name}">My page</a>
+                                <a href="#Settings">Settings</a>
+                                <a th:href="@{/logout}">Logout</a>
+                            </div>
+                        </div>
+                        <script>
+                /* When the user clicks on the button,
+                toggle between hiding and showing the dropdown content */
+                function myFunction() {
+                  document.getElementById("myDropdown").classList.toggle("show");
+                }
+
+                // Close the dropdown if the user clicks outside of it
+                window.onclick = function(event) {
+                  if (!event.target.matches('.dropdown-toggle')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                      var openDropdown = dropdowns[i];
+                      if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                      }
+                    }
+                  }
+                }
+                </script>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</div>
+
+<div th:fragment="navBar_login_logout_register">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                <img
+                        src="https://www.logo.wine/a/logo/Reddit/Reddit-Logomark-Color-Logo.wine.svg"
+                        height="40"
+                        width="30"
+                        alt="Black and White Portrait of a Man"
+                        loading="lazy"
+                />
+                Reddit
+            </a>
+            <div class="p-2 flex-grow-1 bd-highlight d-flex justify-content-center navTitle">
+                <h2 th:if="${#httpServletRequest.requestURI == '/login'}">Welcome to Reddit, please log in </h2>
+                <h2 th:if="${#httpServletRequest.requestURI == '/register'}">Welcome to Reddit, please register</h2>
+
+            </div>
+            <div class=" buttons" id="navbarResponsive2">
+                <ul class="navbar-nav ml-auto">
+
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/redirect?to=https://www.reddit.com}">
+                            <form class="form-inline">
+                                <button type="button" class="btn btn-outline-light">Real Reddit</button>
+                            </form>
+                        </a>
+                    </li>
+
+                    <li  th:if="${#httpServletRequest.requestURI == '/register'}" class="nav-item active">
+                        <a class="nav-link" th:href="@{/login}">
+                            <form class="form-inline">
+                                <button type="button" class="btn btn-outline-primary">Login</button>
+                            </form>
+                        </a>
+                    </li>
+
+                    <li th:if="${#httpServletRequest.requestURI == '/login'}" class="nav-item">
+                        <a class="nav-link" th:href="@{/register}">
+                            <form class="form-inline">
+                                <button type="button" class="btn btn-secondary">Register</button>
+                            </form>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </nav>
+</div>
+
+
+</body>
+</html>

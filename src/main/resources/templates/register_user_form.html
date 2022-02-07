@@ -7,15 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Create an account</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <!-- <style th:replace="Menu_bar :: drop_down_style"/>-->
+    <link rel="stylesheet" href="/css/drop_down_style_file.css"/>
 
 </head>
 <body>
+<div th:replace="Menu_bar :: navBar_login_logout_register"/>
 
-<div class="container">
-
+<div class="container pt-5">
     <div class="row">
         <div class="col">
-            <h2 class="mt-5 d-flex justify-content-center form-signin-heading">Create an account</h2>
 
             <div sec:authorize="!isAuthenticated()">
 

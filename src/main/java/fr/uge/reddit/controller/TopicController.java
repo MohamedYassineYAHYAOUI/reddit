@@ -4,25 +4,19 @@ import fr.uge.reddit.dto.ReplyboxDTO;
 import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
-import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.services.AdminService;
 import fr.uge.reddit.services.MessageService;
+import fr.uge.reddit.services.TopicService;
 import fr.uge.reddit.services.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import fr.uge.reddit.services.TopicService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
 import javax.validation.Valid;
 import java.util.Date;
+
 
 @Controller
 @RequestMapping("/topic")
@@ -56,18 +50,20 @@ public class TopicController {
     public String getTopicById(@PathVariable("id") long id, Model model){
         var topic = topicService.getTopic(id).orElse(null);
         if(topic != null){
+            System.out.println("tpopic foind ---");
             model.addAttribute("topic", topic);
+
             return "topic";
         }
-        return "redirect:/popular";
+        return "redirect:/";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteTopic(@PathVariable("id") long topicId, Model model){
         adminService.deleteTopic(topicId);
-
-        return "redirect:/popular";
+        return "redirect:/";
     }
+
 
     @PostMapping("/create")
     public String createTopic(@Valid @ModelAttribute("topic") TopicDTO topic, BindingResult bindingResult, Model model) {
@@ -79,22 +75,16 @@ public class TopicController {
         var message = new MessageEntity();
         message.setBody(topic.getBody());
         message.setAuthor(userService.currentUser());
+
         message.setTimeStamp(new Date());
         newTopic.setTitle(topic.getTitle());
         newTopic.setMessage(message);
         topicService.createNewTopic(newTopic);
-        model.addAttribute("topicService", topicService);
-        return "redirect:/popular";
+        //model.addAttribute("topicService", topicService);
+        return "redirect:/";
     }
 
-    /*
-    @GetMapping("/topics")
-    public String topics(@RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,
-                         @RequestParam(value = "size", required = false, defaultValue = "5")int size,
-                         Model model){
-        var topics = topicService.findPaginated(PageRequest.of(pageNumber-1 , size));
 
-    }*/
 
     @PostMapping("/{id}")
     public String getHomePage(@PathVariable("id") long id, @ModelAttribute("replybox") @Valid ReplyboxDTO replyboxDTO, BindingResult bindingResult, Model model) {
