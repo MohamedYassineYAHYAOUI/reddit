@@ -6,12 +6,14 @@
     <title>Reddit</title>
 </head>
 <body>
-    <h1 th:text="${topic.getTitle()}"></h1>
+    <div th:fragment="topic (topic)">
+        <h1 th:text="${topic.getTitle()}"></h1>
 
-    <div th:replace="message-fragment :: message(message = ${topic.getMessage()})"/>
+        <div th:replace="message-fragment :: message(message = ${topic.getMessage()})"/>
 
-    <div sec:authorize="isAuthenticated()">
-        <div th:replace="message-fragment :: replybox"/>
+        <div sec:authorize="isAuthenticated()">
+            <div th:replace="message-fragment :: replybox"/>
+        </div>
     </div>
 </body>
 </html>

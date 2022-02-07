@@ -11,7 +11,7 @@
     <div th:fragment="message (message)">
         <details open>
             <summary>
-                <a th:href="@{/u/} + ${message.author}" th:text="${message.author}"/>
+                <a th:href="@{/user/{id}(id=${message.getAuthor().getId()})}" th:text="${message.getAuthor().getUsername()}"/>
                 Score: <span th:text="${message.score}"/>
                 <a th:href="@{/upvote/} + ${message.id}">+</a>
                 <a th:href="@{/downvote/} + ${message.id}">-</a>

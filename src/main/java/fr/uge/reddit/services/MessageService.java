@@ -16,6 +16,9 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Transactional
     @Retryable
     public void reply(ReplyboxDTO replyboxDTO) {
@@ -24,8 +27,8 @@ public class MessageService {
         var reply = new MessageEntity();
         reply.setBody(replyboxDTO.getBody());
         reply.setTimeStamp(new Date());
+        reply.setAuthor(userService.currentUser());
         messageRepository.save(reply);
-        // TODO reply.setAuthor(...);
 
         var to = messageRepository.findById(replyboxDTO.getTo()).orElseThrow();
         to.getReplies().add(reply);
