@@ -6,6 +6,7 @@ import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.services.AdminService;
+import fr.uge.reddit.services.MessageService;
 import fr.uge.reddit.services.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,14 +33,17 @@ public class TopicController {
     @Autowired
     private AdminService adminService;
 
-    @ModelAttribute("topic")
-    public TopicDTO topicDTO() {
-        return new TopicDTO();
-    }
+    @Autowired
+    private MessageService messageService;
 
     @ModelAttribute("replybox")
     public ReplyboxDTO replyboxDTO() {
         return new ReplyboxDTO();
+    }
+
+    @ModelAttribute("topic")
+    public TopicDTO topicDTO() {
+        return new TopicDTO();
     }
 
     @GetMapping("/create")
@@ -88,5 +92,18 @@ public class TopicController {
         var topics = topicService.findPaginated(PageRequest.of(pageNumber-1 , size));
 
     }*/
+
+    @PostMapping("/{id}")
+    public String getHomePage(@PathVariable("id") long id, @ModelAttribute("replybox") @Valid ReplyboxDTO replyboxDTO, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "redirect:/topic/" + id;
+        }
+
+        // TODO: If possible, avoid redirecting to a dynamic url
+
+        messageService.reply(replyboxDTO);
+
+        return "redirect:/topic/" + id;
+    }
 
 }

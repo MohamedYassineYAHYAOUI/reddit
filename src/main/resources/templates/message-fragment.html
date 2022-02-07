@@ -40,7 +40,7 @@
             }
         </script>
         <h1>Reply</h1>
-        <form th:action="@{/reply}" th:object="${replybox}" method="post">
+        <form th:action="@{''}" th:object="${replybox}" method="post">
             <div>
                 <label for="reply_to_input" disabled>Replying to</label>
                 <input th:field="*{to}" id="reply_to_input" type="text" name="to" readonly>
