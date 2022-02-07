@@ -3,9 +3,10 @@ package fr.uge.reddit.controller;
 import fr.uge.reddit.dto.TopicDTO;
 
 import fr.uge.reddit.entity.UserEntity;
+
 import fr.uge.reddit.entity.VotesEntity;
-import fr.uge.reddit.entity.VotesType;
 import fr.uge.reddit.repository.UserRepository;
+import fr.uge.reddit.repository.VotesRepository;
 import fr.uge.reddit.services.UserService;
 import fr.uge.reddit.services.VoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,6 @@ public class VoteController {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private UserRepository userRepository;
 
     @ModelAttribute("topic")
     public TopicDTO credentials() {
@@ -34,23 +33,29 @@ public class VoteController {
     }
 
 
+    @Autowired
+    private VotesRepository votesRepository;
+
     @PostMapping("/upvote/{id}")
-    public String upvoteTopic(@PathVariable("id") long topicId, Model model){
-        System.out.println(topicId);
-        /*UserEntity currUser = userService.currentUser();
-        VotesEntity votes = new VotesEntity(topicId, VotesType.UPVOTE);
+    public String upvoteTopic(@PathVariable("id") long messageId, Model model){
+        System.out.println(" ----> "+ messageId);
+        UserEntity currUser = userService.currentUser();
+        VotesEntity vote = votesRepository.findbyMessageId(messageId);
+        /*VotesEntity votes = new VotesEntity(topicId, VotesType.UPVOTE);
 
         currUser.getVotes().add(votes);
         currUser.setVotes(currUser.getVotes());
         userRepository.save(currUser);*/
-        voteService.incrementVote(topicId);
+        voteService.incrementVote(currUser, messageId, vote);
         return "redirect:/popular";
     }
 
     @PostMapping("/downVote/{id}")
-   public String downVoteTopic(@PathVariable("id") long topicId, Model model){
-        System.out.println(topicId);
-        voteService.downVote(topicId);
+   public String downVoteTopic(@PathVariable("id") long messageId, Model model){
+        System.out.println("=>    " + messageId);
+        UserEntity currUser = userService.currentUser();
+        VotesEntity vote = votesRepository.findbyMessageId(messageId);
+        voteService.downVote(currUser, messageId, vote);
         return "redirect:/popular";
     }
 }

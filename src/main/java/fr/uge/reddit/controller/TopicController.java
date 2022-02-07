@@ -61,9 +61,9 @@ public class TopicController {
         }
         TopicEntity newTopic = new TopicEntity();
         MessageEntity message = new MessageEntity();
-        /*message.setBody(topic.getBody());
+        message.setBody(topic.getBody());
         newTopic.setTitle(topic.getTitle());
-        newTopic.setMessage(message);*/
+        newTopic.setMessage(message);
         topicService.createNewTopic(newTopic);
         model.addAttribute("topicService", topicService);
         return "redirect:/popular";

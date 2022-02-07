@@ -10,16 +10,17 @@ public class VotesEntity {
     @Column(name="VOTEID")
     private Long id;
 
-    @Column(name="POSTID")
-    private long postId;
+    @Column(name="MessageID")
+    private long messageId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="VOTE")
     private VotesType vote;
 
     public VotesEntity(){}
 
-    public VotesEntity(long postId, VotesType vote){
-        this.postId = postId;
+    public VotesEntity(long messageId, VotesType vote){
+        this.messageId = messageId;
         this.vote = vote;
     }
     public VotesType getVote() {
@@ -39,11 +40,11 @@ public class VotesEntity {
     }
 
     public long getPostId() {
-        return postId;
+        return messageId;
     }
 
     public void setPostId(long postId) {
-        this.postId = postId;
+        this.messageId = postId;
     }
 
 }

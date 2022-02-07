@@ -58,16 +58,14 @@ public class RedditApplication {
     @Bean
     public CommandLineRunner cmd(VoteService voteservice,UserRepository userRepo, TopicRepository postRepo,MessageRepository msgRepository){
         return args -> {
-            var user =new UserEntity("User","aaa", UserRoles.USER);
+            var user =new UserEntity("User","userpw", UserRoles.USER);
             userRepo.save(user);
-
 
             var post_msg = new MessageEntity(user,"post", null);
             var msg1 = new MessageEntity(user,"reply 1", null);
             var msg2 = new MessageEntity(user,"reply 2", null);
             msgRepository.save(msg1);
             msgRepository.save(msg2);
-
             var post_entity = new TopicEntity(post_msg, "test post");
             postRepo.save(post_entity);
 

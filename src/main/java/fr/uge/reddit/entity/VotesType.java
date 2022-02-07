@@ -2,20 +2,18 @@ package fr.uge.reddit.entity;
 
 public enum VotesType {
 
+    UPVOTE("UpVote"),
+    DOWNVOTE("DownVote");
 
-    UPVOTE("upVote"),
-    DOWNVOTE("downVote");
-
-    private String votetype;
+    private String role;
 
 
-    VotesType (String type){
-        this.votetype = type;
+    VotesType(String roleName){
+        this.role = roleName;
     }
 
-    public String getVote() {
-        return votetype;
+    public String getRole() {
+        return role;
     }
-
-
 }
+
