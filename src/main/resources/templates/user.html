@@ -3,20 +3,20 @@
 <head>
     <title>Reddit</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <h1>Reddit</h1>
     <h2 th:text="${user.login}"></h2>
-
-    <div th:if="${topics != null}">
-        <div>
-            <ul>
-                <li th:each="topic : ${topics}">
-                    <div th:replace="topic :: topic(topic = ${topic}, replybox = ${replybox})"></div>
-                </li>
-            </ul>
-        </div>
+    <div class="container">
+            <div class="mt-5 mb-5">
+                <tr th:each="topic : ${page.getContent()}">
+                    <td th:replace="topic :: topic(topic = ${topic}, replybox = ${replybox})">topic</td>
+                </tr>
+            </div>
+            <div>
+                <td th:replace="tablePagination :: tablePagination(page = ${page}, link = @{/user/1})">pagination</td>
+            </div>
     </div>
-
 </body>
 </html>

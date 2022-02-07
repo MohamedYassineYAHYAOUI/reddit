@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reddit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:fragment="tablePagination (page, link)">
+    <nav aria-label="Page navigation" class="paging">
+        <ul class="pagination" th:if="${page.getMaxPage() >= 0}">
+            <li class="page-item" th:classappend="${page.getCurrentPage() <= 0 ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{{link}?page={page}&pageSize={pageSize}(link=${link}, page=${page.getCurrentPage() - 1}, pageSize=${page.getPageSize()})}"
+                   tabindex="-1">Previous</a>
+            </li>
+            <th:block th:each="index : ${#numbers.sequence( 0, (page.getMaxPage() - 1 < 0 ? 0 : page.getMaxPage() - 1))}">
+                <li class="page-item" th:classappend="${index == page.getCurrentPage()? 'active' : ''}"
+                    th:if="${(index <= page.getCurrentPage() + 2 and index >= page.getCurrentPage() - 2) or index == 0 or index == page.getMaxPage() - 1}">
+                    <a class="page-link"
+                       th:href="@{{link}?page={page}&pageSize={pageSize}(link=${link}, page=${index}, pageSize=${page.getPageSize()})}"
+                       th:text="${index+1}"></a>
+                </li>
+                <li class="page-item disabled" th:if="${(index < page.getCurrentPage() - 2 and index == 1) or (index > page.getCurrentPage() + 2 and index == page.getMaxPage() - 2)}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            </th:block>
+            <li class="page-item" th:classappend="${page.getMaxPage() <= page.getCurrentPage() + 1 ? 'disabled' : ''}">
+                <a class="page-link" th:href="@{{link}?page={page}&pageSize={pageSize}(link=${link}, page=${page.getCurrentPage() + 1}, pageSize=${page.getPageSize()})}">Next</a>
+            </li>
+        </ul>
+    </nav>
+</div>
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
