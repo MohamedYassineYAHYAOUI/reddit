@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>Reddit</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <!-- TODO: remove inline style -->
+    <!-- TODO: message.author.name -->
+    <div th:fragment="message (message)">
+        <details open>
+            <summary>
+                <a th:href="@{/user/{id}(id=${message.getAuthor().getId()})}" th:text="${message.getAuthor().getUsername()}"/>
+                Score: <span th:text="${message.score}"/>
+                <a th:href="@{/upvote/} + ${message.id}">+</a>
+                <a th:href="@{/downvote/} + ${message.id}">-</a>
+                <span sec:authorize="isAuthenticated()">
+                    <a href="#replybox" th:onclick="'prepareReplybox(' + ${message.id} + ')'">Reply</a>
+                </span>
+            </summary>
+
+            <p th:text="${message.body}"/>
+            <ul style="list-style: none">
+                <li th:each="reply : ${message.replies}">
+                    <div th:replace="message-fragment :: message(message = ${reply})"/>
+                </li>
+            </ul>
+        </details>
+
+    </div>
+
+    <div id="replybox" th:fragment="replybox" style="background-color: lightgray">
+        <script>
+            function prepareReplybox(postId) {
+                const to = document.getElementById("reply_to_input");
+                const body = document.getElementById("reply_body_input");
+                to.value = postId;
+                body.value = "";
+            }
+        </script>
+        <h1>Reply</h1>
+        <form th:action="@{''}" th:object="${replybox}" method="post">
+            <div>
+                <label for="reply_to_input" disabled>Replying to</label>
+                <input th:field="*{to}" id="reply_to_input" type="text" name="to" readonly>
+                <p th:if="${#fields.hasErrors('to')}" th:errors="*{to}" />
+            </div>
+            <div>
+                <label for="reply_body_input">Body</label>
+                <textarea th:field="*{body}" type="text" id="reply_body_input" name="body"/>
+                <p th:if="${#fields.hasErrors('body')}" th:errors="*{body}" />
+            </div>
+            <div>
+                <button type="submit">Reply</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

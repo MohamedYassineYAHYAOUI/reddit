@@ -20,18 +20,10 @@ public class AdminService {
 
     @Transactional
     public void deleteTopic(long postId){
-        Objects.requireNonNull(postId);
-
         var topicOpt = topicRepository.findTopicById(postId);
         if(topicOpt == null){
             throw new IllegalArgumentException("Post doesn't exist");
         }
-        var topicMsg = topicOpt.getMessage();
-        var replies = topicMsg.getReplies();
-        for(var msg: replies){
-            messageRepository.delete(msg);
-        }
-        messageRepository.delete(topicMsg);
         topicRepository.delete(topicOpt);
     }
 
