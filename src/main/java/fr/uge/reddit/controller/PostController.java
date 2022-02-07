@@ -4,6 +4,7 @@ import fr.uge.reddit.dto.TopicDTO;
 import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.services.TopicService;
+import fr.uge.reddit.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,8 @@ import javax.validation.Valid;
 public class PostController {
     @Autowired
     TopicService postService;
+    @Autowired
+    UserService userService;
 
     @ModelAttribute("post")
     public TopicDTO post() {
@@ -48,6 +51,7 @@ public class PostController {
         TopicEntity newPost = new TopicEntity();
         MessageEntity message = new MessageEntity();
         message.setBody(post.getBody());
+        message.setAuthor(userService.currentUser());
         newPost.setTitle(post.getTitle());
         newPost.setMessage(message);
         postService.createNewTopic(newPost);

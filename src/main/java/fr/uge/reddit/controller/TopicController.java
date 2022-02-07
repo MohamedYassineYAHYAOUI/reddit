@@ -30,6 +30,9 @@ public class TopicController {
     private TopicService topicService;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private AdminService adminService;
 
     @ModelAttribute("topic")
@@ -72,6 +75,7 @@ public class TopicController {
         var message = new MessageEntity();
         message.setBody(topic.getBody());
         // message.setAuthor(user);
+        message.setAuthor(userService.currentUser());
         message.setTimeStamp(new Date());
         newTopic.setTitle(topic.getTitle());
         newTopic.setMessage(message);

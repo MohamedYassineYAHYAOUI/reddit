@@ -6,13 +6,17 @@
 </head>
 <body>
     <h1>Reddit</h1>
-    <h2 th:text="${user.login}"/>
+    <h2 th:text="${user.login}"></h2>
 
-    <ul style="list-style: none">
-        <li th:each="message : ${messages}">
-            <div th:replace="message-fragment :: message(message = ${message})"/>
-        </li>
-    </ul>
+    <div th:if="${topics != null}">
+        <div>
+            <ul>
+                <li th:each="topic : ${topics}">
+                    <div th:replace="topic :: topic(topic = ${topic}, replybox = ${replybox})"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
 
 </body>
 </html>
