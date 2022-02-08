@@ -5,9 +5,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+
 
 @Entity
 @Table(name="User")
@@ -28,6 +30,11 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRoles userRole;
 
+    @OneToMany(cascade = {CascadeType.ALL} )
+    @JoinColumn(name = "user_ids" )
+    private List<VotesEntity> votes;
+
+
     public UserEntity(){}
 
     public UserEntity(String login, String password, UserRoles userRole){
@@ -36,6 +43,13 @@ public class UserEntity implements UserDetails {
         this.userRole = Objects.requireNonNull(userRole);
     }
 
+    public List<VotesEntity> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<VotesEntity> votes) {
+        this.votes = votes;
+    }
 
     public Long getId() {
         return id;
@@ -90,8 +104,6 @@ public class UserEntity implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
-
-
 
     public void setId(Long id) {
         this.id = id;

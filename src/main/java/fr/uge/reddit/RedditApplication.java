@@ -1,8 +1,6 @@
 package fr.uge.reddit;
 
 
-import fr.uge.reddit.entity.MessageEntity;
-import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.entity.UserRoles;
 import fr.uge.reddit.repository.MessageRepository;
@@ -14,7 +12,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.util.List;
 
 @SpringBootApplication
 public class RedditApplication {
@@ -25,7 +22,6 @@ public class RedditApplication {
             userService.createNewUserAccount(new UserEntity("admin","admin", UserRoles.ADMIN)); // TODO: mettre dans les logins dans properties
         };
     }
-
     public static void main(String[] args) {
         SpringApplication.run(RedditApplication.class, args);
     }

@@ -17,7 +17,6 @@ public class MessageDTO {
 
     private List<MessageDTO> replies;
 
-
     public String getBody() {
         return body;
     }

@@ -65,6 +65,7 @@ public class TopicController {
     }
 
 
+
     @PostMapping("/create")
     public String createTopic(@Valid @ModelAttribute("topic") TopicDTO topic, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
@@ -80,8 +81,11 @@ public class TopicController {
         newTopic.setTitle(topic.getTitle());
         newTopic.setMessage(message);
         topicService.createNewTopic(newTopic);
+
         //model.addAttribute("topicService", topicService);
         return "redirect:/";
+
+
     }
 
 

@@ -43,4 +43,5 @@ public class TopicServiceWithFailure {
     public TopicRepository getTopicRepository() {
         return topicRepository;
     }
+
 }

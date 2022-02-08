@@ -7,6 +7,8 @@
     <title>Title</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/pagination_style_file.css"/>
+    <link rel="stylesheet" href="/css/drop_down_style_file.css"/>
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 </head>
 <body>
 
@@ -24,21 +26,16 @@
                             <div class="col-sm-2 d-flex align-content-center justify-content-center flex-wrap"> <!-- score / votes-->
                                 <div class="row row-cols-2">
                                     <div class="col">
-                                        <a class="ms-auto" href="/downvote">
-                                        <img src="images/hand-thumbs-down.svg"
-                                             height="20"
-                                             width="40"
-                                             loading="lazy"/>
-                                        </a>
+                                        <form th:action="@{/vote/downVote/{id}(id=${topic.getMessage().getId()})}" method="post">
+                                            <button style="font-size:14px"><i class="far fa-thumbs-down" aria-hidden="true"></i></button>
+                                        </form>
                                     </div>
                                     <div class="col">
-                                        <a class="ms-auto" href="/upvote">
-                                            <img
-                                                src="images/hand-thumbs-up.svg"
-                                                height="20"
-                                                width="40"
-                                                loading="lazy"/>
-                                        </a>
+
+                                            <form th:action="@{/vote/upVote/{id}(id=${topic.getMessage().getId()})}" method="post">
+                                                <button  style="font-size:14px"><i class="far fa-thumbs-up" aria-hidden="true"></i></button>
+                                            </form>
+
                                     </div>
                                     <div class="flex-grow-1 text-center col-6">
                                         <span th:text="${topic.message.score}"/>

@@ -23,6 +23,7 @@ public class HomeController {
     @Autowired
     private TopicService topicService;
 
+
     @GetMapping("/")
     public String home_page(@RequestParam(value = "by", required = false, defaultValue = "newest") TopicSortEnum sort,
                         @RequestParam(value = "pageNumber", required = false, defaultValue = "1") int pageNumber,

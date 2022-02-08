@@ -3,6 +3,7 @@ package fr.uge.reddit.services;
 import fr.uge.reddit.dto.PageDTO;
 import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.entity.UserEntity;
+import fr.uge.reddit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
@@ -25,17 +26,18 @@ public class UserService {
     private TopicServiceWithFailure topicServiceWithFailure;
 
     @Transactional
-    public void createNewUserAccount(UserEntity user) throws IllegalArgumentException{
+    public void createNewUserAccount(UserEntity user) throws IllegalArgumentException {
         var retry = true;
-        while(retry){
-            retry=false;
-            try{
+        while (retry) {
+            retry = false;
+            try {
                 userServiceWithFailure.createUserWithFailure(user);
-            }catch(ObjectOptimisticLockingFailureException e){
+            } catch (ObjectOptimisticLockingFailureException e) {
                 retry = true;
             }
         }
     }
+
 
     @Transactional
     public UserEntity findUser(String login) throws IllegalArgumentException{
