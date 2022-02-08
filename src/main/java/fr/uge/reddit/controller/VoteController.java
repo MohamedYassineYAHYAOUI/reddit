@@ -38,21 +38,16 @@ public class VoteController {
 
     @PostMapping("/upVote/{id}")
     public String upvoteTopic(@PathVariable("id") long messageId, Model model){
-        System.out.println(" ----> "+ messageId);
+
         UserEntity currUser = userService.currentUser();
         VotesEntity vote = votesRepository.findbyMessageId(messageId);
-        /*VotesEntity votes = new VotesEntity(topicId, VotesType.UPVOTE);
-
-        currUser.getVotes().add(votes);
-        currUser.setVotes(currUser.getVotes());
-        userRepository.save(currUser);*/
         voteService.incrementVote(currUser, messageId, vote);
         return "redirect:/";
     }
 
     @PostMapping("/downVote/{id}")
    public String downVoteTopic(@PathVariable("id") long messageId, Model model){
-        System.out.println("=>    " + messageId);
+        
         UserEntity currUser = userService.currentUser();
         VotesEntity vote = votesRepository.findbyMessageId(messageId);
         voteService.downVote(currUser, messageId, vote);
