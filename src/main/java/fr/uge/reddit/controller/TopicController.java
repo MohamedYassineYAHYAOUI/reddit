@@ -9,6 +9,8 @@ import fr.uge.reddit.services.MessageService;
 import fr.uge.reddit.services.TopicService;
 import fr.uge.reddit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,6 +51,11 @@ public class TopicController {
     @GetMapping("/{id}")
     public String getTopicById(@PathVariable("id") long id, Model model){
         var topic = topicService.getTopic(id).orElse(null);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        var currentUser = userService.findUser(authentication.getName());
+        if(currentUser != null){
+            model.addAttribute("user", currentUser);
+        }
         if(topic != null){
             System.out.println("tpopic foind ---");
             model.addAttribute("topic", topic);
