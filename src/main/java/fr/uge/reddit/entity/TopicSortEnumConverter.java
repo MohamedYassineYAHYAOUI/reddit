@@ -13,8 +13,6 @@ public class TopicSortEnumConverter implements Converter<String, TopicSortEnum> 
         if(source == null) {
             return null;
         }
-        var value = TopicSortEnum.valueOf(source.toUpperCase());
-        System.out.println("value sent = "+value.getSortType());
-        return value;
+        return TopicSortEnum.valueOf(source.toUpperCase());
     }
 }

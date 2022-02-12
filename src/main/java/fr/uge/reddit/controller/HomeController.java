@@ -32,13 +32,9 @@ public class HomeController {
                             @RequestParam(value = "page",defaultValue = "0") int page,
                             @RequestParam(value = "pageSize", defaultValue = "5") int pageSize,
                             Model model) {
-        if(sort.isEmpty()){
-            System.out.println("empty------------------");
-        }
         var topics = topicService.findPaginated(sort.orElse(TopicSortEnum.NEWEST),page , pageSize);
         model.addAttribute("topicsPage", topics);
         model.addAttribute("sortMethod",sort==null?"Newest":sort.orElse(TopicSortEnum.NEWEST).getSortType());
-        //model.addAttribute("sortMethod",new String());
 
         var list =  Arrays.stream(TopicSortEnum.values()).map(TopicSortEnum::getSortType).toArray(String[]::new);
 

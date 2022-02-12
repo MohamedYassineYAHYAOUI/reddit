@@ -24,18 +24,5 @@ public enum TopicSortEnum {
         this.sortType = sortType;
     }
 
-/*
-    public static TopicSortEnum fromValue(String value) {
-        if(value == null)
-            return null;
-        var valueLc = value.toLowerCase();
-        for(TopicSortEnum enumValue: values()){
-            if(valueLc.equals(enumValue.getSortType())){
-                return enumValue;
-            }
-        }
-        throw new IllegalArgumentException("Invalid enum value type");
-    }
-*/
 
 }
