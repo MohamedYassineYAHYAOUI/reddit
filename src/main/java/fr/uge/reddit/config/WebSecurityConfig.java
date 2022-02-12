@@ -29,7 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 //.antMatchers(new AntPathRequestMatcher("/logout", "GET"))
-                .antMatchers("/","/static/**", "/index", "/register","/redirect","/css/**", "/webjars/**", "/assets/**", "/js/**, ").permitAll()
+                .antMatchers("/","/static/**", "/index", "/register","/redirect","/css/**","/Worst",
+                        "/Newest", "/Best", "/Oldest", "/webjars/**", "/assets/**", "/js/**").permitAll()
                 .antMatchers("/topic/delete/**").hasAnyRole("ADMIN")
                 .antMatchers("/topic/**").hasAnyRole("ADMIN", "USER")
                 .anyRequest().authenticated()

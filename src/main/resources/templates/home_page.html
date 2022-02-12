@@ -15,9 +15,10 @@
 </head>
 <body class="bg-light text-dark">
 
-<div th:replace="Menu_bar :: navBar"/>
-
-<div th:replace="topics_pagination :: topicsPagination(${topicsPage}, ${pageNumbers})"/>
+<div th:replace="Menu_bar :: navBar"></div>
+<div th:replace="topics_listing :: filter(allFilters = ${allFilters}, selected=${sortMethod})"></div>
+<div th:replace="topics_listing :: topicsListing(topicsPage = ${topicsPage})"></div>
+<div th:replace="tablePagination :: tablePagination(page = ${topicsPage}, link = @{'/'+${sortMethod}})"></div>
 
 
 </body>
