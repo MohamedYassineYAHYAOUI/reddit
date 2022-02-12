@@ -27,6 +27,16 @@ public class AdminService {
         topicRepository.delete(topicOpt);
     }
 
+    @Transactional
+    public void updateDeleteMessage(long messageId){
+        var messageOpt = messageRepository.findMessageEntityById(messageId).get();
+        if(messageOpt == null){
+            throw new IllegalArgumentException("Message doesn't exist");
+        }
+        messageOpt.setAuthor(null);
+        messageOpt.setBody("Message deleted");
+
+    }
 
     
 }

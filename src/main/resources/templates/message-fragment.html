@@ -9,8 +9,8 @@
     <!-- TODO: remove inline style -->
     <!-- TODO: message.author.name -->
     <div th:fragment="message (message)">
-        <details open>
-            <summary>
+        <details open th:switch="${message.getAuthor() == null} ">
+            <summary th:case="${false}">
                 <a th:href="@{/user/{id}(id=${message.getAuthor().getId()})}" th:text="${message.getAuthor().getUsername()}"/>
                 Score: <span th:text="${message.score}"/>
                 <a th:href="@{/upvote/} + ${message.id}">+</a>
@@ -18,9 +18,20 @@
                 <span sec:authorize="isAuthenticated()">
                     <a href="#replybox" th:onclick="'prepareReplybox(' + ${message.id} + ')'">Reply</a>
                 </span>
+                <div class="col-sm-2 d-flex align-content-center justify-content-center flex-wrap">
+                    <form sec:authorize="hasRole('ADMIN')" class="form-inline" method="post" th:action="${'/message/delete/'+message.id}">
+                        <button class="btn btn-outline-danger btn-sm" type="submit" >Delete</button>
+                    </form>
+                    <form sec:authorize="hasRole('USER')" th:if="${user.id == message.getAuthor().getId()}" class="form-inline" method="post" th:action="${'/message/delete/'+message.id}">
+                        <button class="btn btn-outline-danger btn-sm" type="submit" >Delete</button>
+                    </form>
+                </div>
+                <p th:text="${message.body}"/>
+            </summary>
+            <summary th:case="${true}">
+                <p>Message deleted</p>
             </summary>
 
-            <p th:text="${message.body}"/>
             <ul style="list-style: none">
                 <li th:each="reply : ${message.replies}">
                     <div th:replace="message-fragment :: message(message = ${reply})"/>
