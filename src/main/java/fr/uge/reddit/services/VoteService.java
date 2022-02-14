@@ -1,8 +1,8 @@
 package fr.uge.reddit.services;
 
-import fr.uge.reddit.entity.MessageEntity;
 import fr.uge.reddit.entity.UserEntity;
 import fr.uge.reddit.entity.VotesEntity;
+import fr.uge.reddit.entity.VotesType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,11 +17,12 @@ public class VoteService {
         while (retry) {
             retry = false;
             try {
-                voteServiceWithFailure.incrementVoteWithFailure(currUser, id, vote);
+                  voteServiceWithFailure.incrementVoteWithFailure(currUser, id, vote);
             } catch (org.springframework.orm.ObjectOptimisticLockingFailureException e) {
                 retry = true;
             }
         }
+
     }
 
     @Transactional
@@ -36,4 +37,6 @@ public class VoteService {
             }
         }
     }
+
+
 }

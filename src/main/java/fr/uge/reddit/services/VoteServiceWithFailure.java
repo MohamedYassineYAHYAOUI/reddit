@@ -21,9 +21,6 @@ public class VoteServiceWithFailure {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private VotesRepository votesRepository;
-
    @Transactional
     public void incrementVoteWithFailure(UserEntity currUser, Long idMessage, VotesEntity vote){
         var message = messageRepository.findById(idMessage).orElseThrow();
@@ -37,9 +34,8 @@ public class VoteServiceWithFailure {
         else{
             if (vote.getVote().equals(VotesType.DOWNVOTE)) {
                 vote.setVote(VotesType.UPVOTE);
-                message.setScore(message.getScore() + 1);
-            }else{
-                // a revoir pour supp la ligne dans la table Votes
+                message.setScore(message.getScore() + 2);
+            }else {
                 currUser.getVotes().remove(vote);
                 message.setScore(message.getScore()  - 1);
             }
@@ -60,7 +56,7 @@ public class VoteServiceWithFailure {
         else{
             if (vote.getVote().equals(VotesType.UPVOTE)) {
                 vote.setVote(VotesType.DOWNVOTE);
-                message.setScore(message.getScore() - 1);
+                message.setScore(message.getScore() - 2);
             }else{
                 currUser.getVotes().remove(vote);
                 message.setScore(message.getScore() + 1);
