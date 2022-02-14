@@ -3,23 +3,30 @@
 <head>
     <title>Reddit</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/pagination_style_file.css"/>
+    <link rel="stylesheet" href="/css/drop_down_style_file.css"/>
 </head>
-<body>
-    <h1>New topic</h1>
+
+<body class="bg-light text-dark">
+<div th:replace="Menu_bar :: navBar"/>
+
+    <h1><i><b>Create topic</b></i><br></h1>
+
     <form th:action="@{/topic/create}" th:object="${topic}" method="post">
         <div>
-            <label for="title_input">Title</label>
-            <input th:field="*{title}" id="title_input" type="text" name="title">
+            <label for="title_input"><br></label>
+            <input th:field="*{title}" id="title_input" type="text"  class="form-control" aria-label="Large" placeholder="Title" aria-describedby="inputGroup-sizing-sm"name="title">
             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
         </div>
 
         <div>
-            <label for="body_input">Body</label>
-            <textarea th:field="*{body}" type="text" id="body_input" name="body"/>
+            <label for="body_input"><br></label>
+            <textarea th:field="*{body}" type="text" id="body_input" class="form-control"   placeholder="Text" rows=5 name="body"/>
             <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" />
         </div>
         <div>
-            <button type="submit">Post</button>
+            <button class="btn btn-primary  float-right" type="submit">Post</button>
         </div>
     </form>
 </body>

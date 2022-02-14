@@ -30,8 +30,8 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRoles userRole;
 
-    @OneToMany(cascade = {CascadeType.ALL} )
-    @JoinColumn(name = "user_ids" )
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},orphanRemoval=true)
+    @JoinColumn(name = "user_id" )
     private List<VotesEntity> votes;
 
 
