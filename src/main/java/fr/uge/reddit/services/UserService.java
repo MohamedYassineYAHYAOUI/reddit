@@ -3,6 +3,8 @@ package fr.uge.reddit.services;
 import fr.uge.reddit.dto.PageDTO;
 import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.entity.UserEntity;
+import fr.uge.reddit.entity.VotesEntity;
+import fr.uge.reddit.entity.VotesType;
 import fr.uge.reddit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -94,5 +98,14 @@ public class UserService {
     public PageDTO<TopicEntity> getTopicsByUser(long userId, int page, int pageSize){
         var request = PageRequest.of(page, pageSize);
        return PageDTO.fromPage(topicServiceWithFailure.getTopicRepository().findTopicByUserId(userId, request));
+    }
+
+    public Set<Long> getUpVote(){
+        return currentUser().getVotes().stream().filter(v->v.getVote().equals(VotesType.UPVOTE))
+                            .map(VotesEntity::getPostId).collect(Collectors.toSet());
+    }
+    public Set<Long> getDownVote(){
+        return currentUser().getVotes().stream().filter(v->v.getVote().equals(VotesType.DOWNVOTE))
+                .map(VotesEntity::getPostId).collect(Collectors.toSet());
     }
 }

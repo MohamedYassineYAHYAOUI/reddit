@@ -3,6 +3,7 @@ package fr.uge.reddit.controller;
 import fr.uge.reddit.dto.CredentialsDTO;
 import fr.uge.reddit.entity.TopicSortEnum;
 import fr.uge.reddit.services.TopicService;
+import fr.uge.reddit.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -23,6 +24,9 @@ public class HomeController {
     @Autowired
     private TopicService topicService;
 
+    @Autowired
+    private UserService userService;
+
 
     @GetMapping("/")
     public String home_page(@RequestParam(value = "by", required = false, defaultValue = "newest") TopicSortEnum sort,
@@ -37,7 +41,13 @@ public class HomeController {
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
+
         }
+
+        model.addAttribute("userUpVote", userService.getUpVote());
+        model.addAttribute("userDownVote", userService.getDownVote());
         return "home_page";
+
+
     }
 }

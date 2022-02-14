@@ -17,8 +17,7 @@
 
 <div th:replace="Menu_bar :: navBar"/>
 
-<div th:replace="topics_pagination :: topicsPagination(${topicsPage}, ${pageNumbers})"/>
-
+<div th:replace="topics_pagination :: topicsPagination(${topicsPage}, ${pageNumbers}, ${userUpVote}, ${userDownVote})"/>
 
 </body>
 </html>
