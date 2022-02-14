@@ -43,9 +43,9 @@ public class HomeController {
             model.addAttribute("pageNumbers", pageNumbers);
 
         }
-
         model.addAttribute("userUpVote", userService.getUpVote());
         model.addAttribute("userDownVote", userService.getDownVote());
+
         return "home_page";
 
 

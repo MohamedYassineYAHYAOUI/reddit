@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -87,8 +88,13 @@ public class UserService {
 
     @Transactional
     public UserEntity currentUser() {
-        var user = (UserDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return findUser(user.getUsername());
+        try{
+            var user = SecurityContextHolder.getContext().getAuthentication().getName();
+            return findUser(user);
+        }catch (IllegalArgumentException e){
+            return null;
+        }
+
     }
 
     public Optional<UserEntity> getUser(long id){
@@ -101,10 +107,18 @@ public class UserService {
     }
 
     public Set<Long> getUpVote(){
+        var currentUser = currentUser();
+        if(currentUser == null){
+            return new HashSet<>();
+        }
         return currentUser().getVotes().stream().filter(v->v.getVote().equals(VotesType.UPVOTE))
                             .map(VotesEntity::getPostId).collect(Collectors.toSet());
     }
     public Set<Long> getDownVote(){
+        var currentUser = currentUser();
+        if(currentUser == null){
+            return new HashSet<>();
+        }
         return currentUser().getVotes().stream().filter(v->v.getVote().equals(VotesType.DOWNVOTE))
                 .map(VotesEntity::getPostId).collect(Collectors.toSet());
     }
