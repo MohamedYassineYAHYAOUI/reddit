@@ -94,6 +94,7 @@ public class UserService {
         }catch (IllegalArgumentException e){
             return null;
         }
+
     }
 
     public Optional<UserEntity> getUser(long id){
@@ -121,6 +122,7 @@ public class UserService {
         if(currentUser == null){
             return new HashSet<>();
         }
+
         return currentUser.getVotes().stream().filter(v->v.getVote().equals(VotesType.DOWNVOTE))
                 .map(VotesEntity::getPostId).collect(Collectors.toSet());
     }

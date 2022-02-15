@@ -29,8 +29,6 @@ public class HomeController {
     @Autowired
     private UserService userService;
 
-
-
     @RequestMapping(value = {"/{sortType}","/"}, method = RequestMethod.GET)
     public String home_page(@PathVariable(value = "sortType" ) Optional<TopicSortEnum> sort,
                             @RequestParam(value = "page",defaultValue = "0") int page,
@@ -45,8 +43,10 @@ public class HomeController {
 
         model.addAttribute("allFilters",list);
 
+
         model.addAttribute("userUpVote", userService.getUpVote());
         model.addAttribute("userDownVote", userService.getDownVote());
+
         return "home_page";
 
 
