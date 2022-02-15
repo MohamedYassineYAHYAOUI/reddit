@@ -105,6 +105,7 @@ public class UserService {
        return PageDTO.fromPage(topicServiceWithFailure.getTopicRepository().findTopicByUserId(userId, request));
     }
 
+    @Transactional
     public Set<Long> getUpVote(){
         var currentUser = currentUser();
         if(currentUser == null){
@@ -113,6 +114,8 @@ public class UserService {
         return currentUser.getVotes().stream().filter(v->v.getVote().equals(VotesType.UPVOTE))
                             .map(VotesEntity::getPostId).collect(Collectors.toSet());
     }
+
+    @Transactional
     public Set<Long> getDownVote(){
         var currentUser = currentUser();
         if(currentUser == null){

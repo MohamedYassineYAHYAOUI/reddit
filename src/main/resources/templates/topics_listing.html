@@ -40,16 +40,16 @@
 
 =======-->
 
-                                       <form th:action="@{/vote/downVote/{id}(id=${topic.getMessage().getId()})}" method="post">
-                                            <th:block th:switch="${userDownVote.contains(topic.getId())}">
+                                       <form th:action="@{/vote/downVote/{id}(id=${topic.message.id})}" method="post">
+                                            <th:block th:switch="${userDownVote.contains(topic.message.id)}">
                                                 <button th:case="${true}"  style="border: none; font-size:15px; background-color:white"><i class="far fa-thumbs-down text-danger" aria-hidden="true"></i></button>
                                                 <button th:case="${false}" style="border: none; font-size:15px; background-color:white"><i class="far fa-thumbs-down" aria-hidden="true"></i></button>
                                             </th:block>
                                         </form>
                                     </div>
                                     <div class="col">
-                                            <form th:action="@{/vote/upVote/{id}(id=${topic.getMessage().getId()})}" method="post">
-                                                <th:block th:switch="${userUpVote.contains(topic.getId())}">
+                                            <form th:action="@{/vote/upVote/{id}(id=${topic.message.id})}" method="post">
+                                                <th:block th:switch="${userUpVote.contains(topic.message.id)}">
                                                     <button th:case="${true}"  style=" border: none; font-size:15px; background-color:white"><i class="far fa-thumbs-up text-success" aria-hidden="true"></i></button>
                                                     <button th:case="${false}" style=" border: none; font-size:15px; background-color:white"><i class="far fa-thumbs-up" aria-hidden="true"></i></button>
                                                 </th:block>
@@ -57,13 +57,13 @@
                                             </form>
                                     </div>
                                     <div class="flex-grow-1 text-center col-6">
-                                       <span th:text="${topic.message.score}"/>
+                                       <!--<span th:text="${topic.getMessage().getScore()}"/>-->
                                     </div>
                                 </div>
                             </div>
                            <div class="col-sm d-flex flex-column bd-highlight">
                                <div class="p-2 bd-highlight">
-                                   <h5 class="card-title" th:text="${topic.getTitle()}"/>
+                                   <h5 class="card-title" th:text="${topic.title}"/>
                                    <a  class="card-link" href="/u/author">
                                        <h6 class="card-subtitle mb-2 text-muted" >author</h6>
                                    </a>
@@ -85,8 +85,7 @@
                                     </a>
                                 </div>
                                 <div> <!--time stamp -->
-                                    <p class="d-flex mr-10 fw-light" th:text="${#dates.format(topic.message.timeStamp, 'dd-MM-yyyy HH:mm')}"/>
-
+                                   <!-- <p class="d-flex mr-10 fw-light" th:text="${#dates.format(topic.message.timeStamp, 'dd-MM-yyyy HH:mm')}"/>-->
                                 </div>
                             </div>
                         </div>
