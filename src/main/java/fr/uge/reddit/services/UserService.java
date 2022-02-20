@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -87,8 +88,13 @@ public class UserService {
 
     @Transactional
     public UserEntity currentUser() {
-        var user = (UserDetails) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        return findUser(user.getUsername());
+        try{
+            var user = SecurityContextHolder.getContext().getAuthentication().getName();
+            return findUser(user);
+        }catch (IllegalArgumentException e){
+            return null;
+        }
+
     }
 
     public Optional<UserEntity> getUser(long id){
@@ -100,12 +106,24 @@ public class UserService {
        return PageDTO.fromPage(topicServiceWithFailure.getTopicRepository().findTopicByUserId(userId, request));
     }
 
+    @Transactional
     public Set<Long> getUpVote(){
-        return currentUser().getVotes().stream().filter(v->v.getVote().equals(VotesType.UPVOTE))
+        var currentUser = currentUser();
+        if(currentUser == null){
+            return new HashSet<>();
+        }
+        return currentUser.getVotes().stream().filter(v->v.getVote().equals(VotesType.UPVOTE))
                             .map(VotesEntity::getPostId).collect(Collectors.toSet());
     }
+
+    @Transactional
     public Set<Long> getDownVote(){
-        return currentUser().getVotes().stream().filter(v->v.getVote().equals(VotesType.DOWNVOTE))
+        var currentUser = currentUser();
+        if(currentUser == null){
+            return new HashSet<>();
+        }
+
+        return currentUser.getVotes().stream().filter(v->v.getVote().equals(VotesType.DOWNVOTE))
                 .map(VotesEntity::getPostId).collect(Collectors.toSet());
     }
 }

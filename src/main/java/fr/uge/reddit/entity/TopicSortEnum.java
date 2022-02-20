@@ -1,21 +1,28 @@
 package fr.uge.reddit.entity;
 
+import java.util.Locale;
+
 public enum TopicSortEnum {
 
-    BEST("best"),
-    WORST("worst"),
-    OLDEST("oldest"),
-    NEWEST("newest");
+    NEWEST("Newest"),
+    BEST("Best"),
+    WORST("Worst"),
+    OLDEST("Oldest");
 
     private String sortType;
 
 
-    TopicSortEnum(String sortType){
+    private TopicSortEnum(String sortType){
         this.sortType = sortType;
     }
 
     public String getSortType() {
-        return sortType;
+        return  sortType;
     }
+
+    public void setSortType(String sortType) {
+        this.sortType = sortType;
+    }
+
 
 }

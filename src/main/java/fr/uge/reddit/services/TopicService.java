@@ -1,11 +1,9 @@
 package fr.uge.reddit.services;
 
-import fr.uge.reddit.dto.TopicDTO;
+import fr.uge.reddit.dto.PageDTO;
 import fr.uge.reddit.entity.TopicEntity;
 import fr.uge.reddit.entity.TopicSortEnum;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -33,14 +31,12 @@ public class TopicService {
 
 
     public Optional<TopicEntity> getTopic(long id){
-        var topic = topicServiceWithFailure.getTopicRepository().findById(id);
-        return topic;
+        return topicServiceWithFailure.getTopicRepository().findById(id);
     }
 
     @Transactional
-    public Page<TopicEntity> findPaginated(TopicSortEnum sortType,int pageNumber, int pageSize){
-        Page<TopicEntity> listOfTopics = topicServiceWithFailure.getTopicsByOrder(sortType, pageNumber, pageSize);
-        return listOfTopics;
+    public PageDTO<TopicEntity> findPaginated(TopicSortEnum sortType,int pageNumber, int pageSize){
+        return PageDTO.fromPage(topicServiceWithFailure.getTopicsByOrder(sortType, pageNumber, pageSize));
     }
 
 }
