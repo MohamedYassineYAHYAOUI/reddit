@@ -14,35 +14,54 @@
 </head>
 <body>
 
-<div th:fragment="topicsPagination(topicsPage, pageNumbers, userUpVote, userDownVote)" >
-    <h2>Posts</h2>
-      <div class="container">
-        <div class="row">
-            <div class="col-lg-10 mt-5 mb-5">
 
-                <div>
-                    <div class="card w-100 pt-10" th:each="topic :${topicsPage}">
-                        <div class="row">
-                            <div class="col-sm-2 d-flex align-content-center justify-content-center flex-wrap"> <!-- score / votes-->
-                                <div class="row row-cols-2">
+<div th:fragment="topicsListing(topicsPage, userUpVote, userDownVote)" >
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-10 ">
+                <div class="d-flex flex-column">
+                    <div class="card w-100 pt-10" th:each="topic :${topicsPage.getContent()}">
+                                <div class="row">
+                                    <div class="col-sm-2 d-flex align-content-center justify-content-center flex-wrap"> <!-- score / votes-->
+                                        <div class="row row-cols-2">
                                     <div class="col">
-                                       <form th:action="@{/vote/downVote/{id}(id=${topic.getMessage().getId()})}" method="post">
-                                            <th:block th:switch="${userDownVote.contains(topic.getMessage().getId())}">
+<!--<<<<<<< HEAD:src/main/resources/templates/topics_listing.html
+                                        <form th:action="@{/vote/downVote/{id}(id=${topic.getId()})}" method="post">
+                                            <button style="font-size:14px"><i class="far fa-thumbs-down" aria-hidden="true"></i></button>
+                                        </form>
+                                    </div>
+                                    <div class="col">
+
+                                            <form th:action="@{/vote/upVote/{id}(id=${topic.getId()})}" method="post">
+                                                    <button  style="font-size:14px"><i class="far fa-thumbs-up" aria-hidden="true"></i></button>
+                                               &lt;!&ndash; <button  style="font-size:14px"><i class="bi bi-hand-thumbs-up-fill"></i></button&ndash;&gt;
+
+=======-->
+
+                                       <form th:action="@{/vote/downVote/{id}(id=${topic.message.id})}" method="post">
+                                            <th:block th:switch="${userDownVote.contains(topic.message.id)}">
                                                 <button th:case="${true}"  style="border: none; font-size:15px; background-color:white"><i class="far fa-thumbs-down text-danger" aria-hidden="true"></i></button>
                                                 <button th:case="${false}" style="border: none; font-size:15px; background-color:white"><i class="far fa-thumbs-down" aria-hidden="true"></i></button>
                                             </th:block>
                                         </form>
                                     </div>
                                     <div class="col">
-                                            <form th:action="@{/vote/upVote/{id}(id=${topic.getMessage().getId()})}" method="post">
-                                                <th:block th:switch="${userUpVote.contains(topic.getMessage().getId())}">
+                                            <form th:action="@{/vote/upVote/{id}(id=${topic.message.id})}" method="post">
+                                                <th:block th:switch="${userUpVote.contains(topic.message.id)}">
                                                     <button th:case="${true}"  style=" border: none; font-size:15px; background-color:white"><i class="far fa-thumbs-up text-success" aria-hidden="true"></i></button>
                                                     <button th:case="${false}" style=" border: none; font-size:15px; background-color:white"><i class="far fa-thumbs-up" aria-hidden="true"></i></button>
                                                 </th:block>
+<!--&gt;>>>>>> main:src/main/resources/templates/topics_pagination.html-->
                                             </form>
                                     </div>
                                     <div class="flex-grow-1 text-center col-6">
+<<<<<<< HEAD:src/main/resources/templates/topics_pagination.html
                                        <!-- <span th:text="${topic.getMessage().getScore()}"/>-->
+=======
+                                        <!--<span th:text="${topic.getMessage().getScore()}"/>-->
+>>>>>>> 88567078d832aeb7e8ffcd0d6d193e9855d1055e:src/main/resources/templates/topics_listing.html
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +76,7 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-2 d-flex align-content-center justify-content-center flex-wrap"> <!-- button sup admin -->
-                                <form sec:authorize="hasRole('ADMIN')" class="form-inline" method="post" th:action="${'/topic/delete/'+topic.id}">
+                                <form sec:authorize="hasRole('ADMIN')" class="form-inline" method="post" th:action="${'/topic/delete/'+topic.getId()}">
                                     <button class="btn btn-outline-danger btn-sm" type="submit" >Delete</button>
                                 </form>
                             </div>
@@ -70,13 +89,12 @@
                                     </a>
                                 </div>
                                 <div> <!--time stamp -->
-                                    <p class="d-flex mr-10 fw-light" th:text="${#dates.format(topic.message.timeStamp, 'dd-MM-yyyy HH:mm')}"/>
+                                   <!-- <p class="d-flex mr-10 fw-light" th:text="${#dates.format(topic.message.timeStamp, 'dd-MM-yyyy HH:mm')}"/>-->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -84,9 +102,19 @@
     <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
     <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
     <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-
 </div>
 
+<div th:fragment="filter(allFilters, selected)">
+    <div class="d-flex justify-content-around mt-2 mb-2">
+        <div th:each="filter : ${allFilters}">
+            <a th:href="@{'/'+${filter}}">
+                <button type="button" class="btn btn-sm"
+                        th:classappend="${selected == filter}? 'btn-primary':'btn-outline-secondary'"
+                        th:text="${filter}"></button>
+            </a>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

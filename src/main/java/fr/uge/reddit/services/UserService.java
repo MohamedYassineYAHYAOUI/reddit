@@ -94,6 +94,7 @@ public class UserService {
         }catch (IllegalArgumentException e){
             return null;
         }
+
     }
 
     public Optional<UserEntity> getUser(long id){
@@ -105,6 +106,7 @@ public class UserService {
         return PageDTO.fromPage(topicServiceWithFailure.getTopicRepository().findTopicByUserId(userId, request));//Page<TopicDto>
     }
 
+    @Transactional
     public Set<Long> getUpVote(){
         var currentUser = currentUser();
         if(currentUser == null){
@@ -114,6 +116,8 @@ public class UserService {
         return currentUser.getVotes().stream().filter(v->v.getVote().equals(VotesType.UPVOTE))
                             .map(VotesEntity::getPostId).collect(Collectors.toSet());
     }
+
+    @Transactional
     public Set<Long> getDownVote(){
         var currentUser = currentUser();
         if(currentUser == null){
