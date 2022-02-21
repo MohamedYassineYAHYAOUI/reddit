@@ -17,7 +17,9 @@ public interface TopicRepository extends PagingAndSortingRepository<TopicEntity,
     @Query("SELECT t FROM TopicEntity t LEFT JOIN FETCH t.message m WHERE t.id = :topicEntity")
     TopicEntity findByIdWithReplies(@Param("topicEntity") Long topicEntity);
 
-    @Query("SELECT t FROM TopicEntity t JOIN t.message m ORDER BY m.timeStamp ASC")
+
+    @Query("SELECT new fr.uge.reddit.dto.TopicDto(t.id, t.title, t.body)" +
+            " FROM TopicEntity t JOIN FETCH t.message m ORDER BY m.timeStamp ASC")
     Page<TopicEntity> findAllOrderedByOldest(Pageable request);
 
     @Query("SELECT t FROM TopicEntity t JOIN t.message m ORDER BY m.timeStamp DESC")

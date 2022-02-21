@@ -21,6 +21,10 @@ public class TopicDTO {
 
     private List<MessageDTO> replies;
 
+    public TopicDTO(Long id, String title, String body){
+        this(id, title, body, 0, null, null, null);
+    }
+
 
     public TopicDTO(Long id, String title, String body, int score, String author, Date timeStamp, List<MessageDTO> replies) {
         this.id = id;
